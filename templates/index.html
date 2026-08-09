@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section id="inicio" class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">Olá, eu sou <span class="accent">{{ perfil.nome }}</span></h1>
+            <p class="hero-tagline">{{ perfil.titulo }} — {{ perfil.tagline }}</p>
+            <div class="hero-actions">
+                <a href="#projetos" class="btn btn-primary">Ver projetos</a>
+                <a href="#contato" class="btn btn-outline">Entrar em contato</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="sobre" class="section">
+    <div class="container">
+        <h2 class="section-title">Sobre mim</h2>
+        <p class="section-text">{{ perfil.bio }}</p>
+        <p class="section-text muted">{{ perfil.localizacao }}</p>
+
+        <h3 class="subsection-title">Habilidades</h3>
+        <div class="badges">
+            {% for habilidade in habilidades %}
+            <span class="badge">{{ habilidade }}</span>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section id="projetos" class="section section-alt">
+    <div class="container">
+        <h2 class="section-title">Projetos</h2>
+        <div class="grid">
+            {% for projeto in projetos %}
+            <article class="card">
+                <h3 class="card-title">{{ projeto.titulo }}</h3>
+                <p class="card-text">{{ projeto.descricao }}</p>
+                <div class="badges badges-small">
+                    {% for tech in projeto.tecnologias %}
+                    <span class="badge badge-outline">{{ tech }}</span>
+                    {% endfor %}
+                </div>
+                <div class="card-links">
+                    <a href="{{ projeto.link }}" class="btn btn-sm btn-primary" target="_blank" rel="noopener">Demo</a>
+                    <a href="{{ projeto.github }}" class="btn btn-sm btn-outline" target="_blank" rel="noopener">Código</a>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section id="experiencia" class="section">
+    <div class="container">
+        <h2 class="section-title">Experiência &amp; Educação</h2>
+
+        <h3 class="subsection-title">Experiência</h3>
+        <div class="timeline">
+            {% for item in experiencias %}
+            <div class="timeline-item">
+                <h4 class="timeline-title">{{ item.cargo }}</h4>
+                <p class="timeline-sub">{{ item.empresa }} · <span class="muted">{{ item.periodo }}</span></p>
+                <p class="timeline-desc">{{ item.descricao }}</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        <h3 class="subsection-title">Educação</h3>
+        <div class="timeline">
+            {% for item in educacao %}
+            <div class="timeline-item">
+                <h4 class="timeline-title">{{ item.curso }}</h4>
+                <p class="timeline-sub">{{ item.instituicao }} · <span class="muted">{{ item.periodo }}</span></p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section id="contato" class="section section-alt">
+    <div class="container">
+        <h2 class="section-title">Contato</h2>
+        <p class="section-text">Vamos conversar? Encontre-me pelos canais abaixo.</p>
+        <div class="contact-links">
+            <a href="mailto:{{ contato.email }}" class="btn btn-primary">Email</a>
+            <a href="{{ contato.github }}" class="btn btn-outline" target="_blank" rel="noopener">GitHub</a>
+            <a href="{{ contato.linkedin }}" class="btn btn-outline" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
