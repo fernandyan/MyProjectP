@@ -17,12 +17,14 @@ Flask portfolio app (dark mode) with SQLAlchemy + Flask-WTF + Flask-Login. Windo
 
 No tests, lint, or formatter are configured. Verify changes with Flask's test client; POSTs need a `csrf_token` scraped from the form HTML because Flask-WTF CSRF is enabled.
 
+User-facing install/setup docs live in `README.md` — point users there instead of re-explaining setup.
+
 ## Architecture
 
 - `app.py` — single entrypoint. App config, extension init (`db`, `login_manager`), ALL routes: public (`/`, `/contato`), auth (`/login`, `/logout`), admin CRUD (`/admin*`, `@login_required`).
 - `models.py` — defines the shared `db` instance; models `User`, `Projeto`, `Experiencia`, `Educacao`, `Mensagem`.
 - `forms.py` — WTForms form classes (one per model + login/contato).
-- `seed.py` — `db.create_all()` + admin user (`admin` / `admin123`) + sample portfolio data. Must run before first boot.
+- `seed.py` — `db.create_all()` + admin user (`admin` / `admin123`) + sample portfolio data. Must run before first boot. Note: `app.py` also calls `db.create_all()` at startup, but that only creates empty tables — no admin user, so you cannot log in without running `seed.py` once.
 - `templates/` — all pages extend `base.html`. Admin forms reuse the generic `admin/item_form.html`.
 
 ## Gotchas
