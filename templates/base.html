@@ -11,16 +11,32 @@
         <div class="container nav-container">
             <a href="#inicio" class="logo">{{ perfil.nome }}</a>
             <ul class="nav-links">
-                <li><a href="#inicio">Início</a></li>
-                <li><a href="#sobre">Sobre</a></li>
-                <li><a href="#projetos">Projetos</a></li>
-                <li><a href="#experiencia">Experiência</a></li>
-                <li><a href="#contato">Contato</a></li>
+                <li><a href="/#inicio">Início</a></li>
+                <li><a href="/#sobre">Sobre</a></li>
+                <li><a href="/#projetos">Projetos</a></li>
+                <li><a href="/#experiencia">Experiência</a></li>
+                <li><a href="{{ url_for('contato') }}">Contato</a></li>
+                {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('admin_dashboard') }}">Admin</a></li>
+                <li><a href="{{ url_for('logout') }}">Sair</a></li>
+                {% else %}
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+                {% endif %}
             </ul>
         </div>
     </nav>
 
     <main>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="container flash-container">
+            {% for category, message in messages %}
+            <div class="flash flash-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
         {% block content %}{% endblock %}
     </main>
 

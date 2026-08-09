@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="admin-header">
+            <h2 class="section-title">Dashboard</h2>
+            <a href="{{ url_for('index') }}" class="btn btn-outline btn-sm">Ver site</a>
+        </div>
+
+        <h3 class="subsection-title">Projetos</h3>
+        <div class="admin-list">
+            {% for projeto in projetos %}
+            <div class="admin-item">
+                <div>
+                    <strong>{{ projeto.titulo }}</strong>
+                    <span class="muted">{{ projeto.tecnologias }}</span>
+                </div>
+                <div class="admin-actions">
+                    <a href="{{ url_for('projeto_editar', item_id=projeto.id) }}" class="btn btn-sm btn-outline">Editar</a>
+                    <a href="{{ url_for('projeto_excluir', item_id=projeto.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('Excluir este projeto?')">Excluir</a>
+                </div>
+            </div>
+            {% else %}
+            <p class="muted">Nenhum projeto cadastrado.</p>
+            {% endfor %}
+            <a href="{{ url_for('projeto_novo') }}" class="btn btn-sm btn-primary">+ Novo projeto</a>
+        </div>
+
+        <h3 class="subsection-title">Experiências</h3>
+        <div class="admin-list">
+            {% for item in experiencias %}
+            <div class="admin-item">
+                <div>
+                    <strong>{{ item.cargo }}</strong>
+                    <span class="muted">{{ item.empresa }} · {{ item.periodo }}</span>
+                </div>
+                <div class="admin-actions">
+                    <a href="{{ url_for('experiencia_editar', item_id=item.id) }}" class="btn btn-sm btn-outline">Editar</a>
+                    <a href="{{ url_for('experiencia_excluir', item_id=item.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('Excluir esta experiência?')">Excluir</a>
+                </div>
+            </div>
+            {% else %}
+            <p class="muted">Nenhuma experiência cadastrada.</p>
+            {% endfor %}
+            <a href="{{ url_for('experiencia_novo') }}" class="btn btn-sm btn-primary">+ Nova experiência</a>
+        </div>
+
+        <h3 class="subsection-title">Educação</h3>
+        <div class="admin-list">
+            {% for item in educacao %}
+            <div class="admin-item">
+                <div>
+                    <strong>{{ item.curso }}</strong>
+                    <span class="muted">{{ item.instituicao }} · {{ item.periodo }}</span>
+                </div>
+                <div class="admin-actions">
+                    <a href="{{ url_for('educacao_editar', item_id=item.id) }}" class="btn btn-sm btn-outline">Editar</a>
+                    <a href="{{ url_for('educacao_excluir', item_id=item.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('Excluir este item?')">Excluir</a>
+                </div>
+            </div>
+            {% else %}
+            <p class="muted">Nenhuma formação cadastrada.</p>
+            {% endfor %}
+            <a href="{{ url_for('educacao_novo') }}" class="btn btn-sm btn-primary">+ Nova formação</a>
+        </div>
+
+        <h3 class="subsection-title">Mensagens de contato</h3>
+        <div class="admin-list">
+            {% for mensagem in mensagens %}
+            <div class="admin-item">
+                <div>
+                    <strong>{{ mensagem.nome }}</strong>
+                    <span class="muted">{{ mensagem.email }} · {{ mensagem.criada_em.strftime('%d/%m/%Y %H:%M') }}</span>
+                    <p class="admin-msg">{{ mensagem.mensagem }}</p>
+                </div>
+                <div class="admin-actions">
+                    <a href="{{ url_for('mensagem_excluir', item_id=mensagem.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('Excluir esta mensagem?')">Excluir</a>
+                </div>
+            </div>
+            {% else %}
+            <p class="muted">Nenhuma mensagem recebida.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

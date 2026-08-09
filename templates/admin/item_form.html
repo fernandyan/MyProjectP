@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="section">
+    <div class="container container-narrow">
+        <h2 class="section-title">{{ "Editar" if acao == "editar" else "Novo" }} {{ titulo_pagina }}</h2>
+
+        <form method="post" class="form">
+            {{ form.hidden_tag() }}
+
+            {% for field in form %}
+            {% if field.type not in ["CSRFTokenField", "SubmitField"] %}
+            <div class="form-group">
+                {{ field.label(class="form-label") }}
+                {{ field(class="form-input") }}
+                {% for error in field.errors %}
+                <span class="form-error">{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endfor %}
+
+            <div class="form-actions">
+                {{ form.submit(class="btn btn-primary") }}
+                <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

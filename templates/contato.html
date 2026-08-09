@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="section">
+    <div class="container container-narrow">
+        <h2 class="section-title">Contato</h2>
+        <p class="section-text">Preencha o formulário abaixo e retornarei em breve.</p>
+
+        <form method="post" class="form">
+            {{ form.hidden_tag() }}
+
+            <div class="form-group">
+                {{ form.nome.label(class="form-label") }}
+                {{ form.nome(class="form-input") }}
+                {% for error in form.nome.errors %}
+                <span class="form-error">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <div class="form-group">
+                {{ form.email.label(class="form-label") }}
+                {{ form.email(class="form-input") }}
+                {% for error in form.email.errors %}
+                <span class="form-error">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <div class="form-group">
+                {{ form.mensagem.label(class="form-label") }}
+                {{ form.mensagem(class="form-input", rows="6") }}
+                {% for error in form.mensagem.errors %}
+                <span class="form-error">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            {{ form.submit(class="btn btn-primary") }}
+        </form>
+
+        <div class="contact-links contact-links-form">
+            <a href="mailto:{{ contato.email }}" class="btn btn-outline">Email</a>
+            <a href="{{ contato.github }}" class="btn btn-outline" target="_blank" rel="noopener">GitHub</a>
+            <a href="{{ contato.linkedin }}" class="btn btn-outline" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -9,7 +9,7 @@
             <p class="hero-tagline">{{ perfil.titulo }} — {{ perfil.tagline }}</p>
             <div class="hero-actions">
                 <a href="#projetos" class="btn btn-primary">Ver projetos</a>
-                <a href="#contato" class="btn btn-outline">Entrar em contato</a>
+                <a href="{{ url_for('contato') }}" class="btn btn-outline">Entrar em contato</a>
             </div>
         </div>
     </div>
@@ -39,7 +39,7 @@
                 <h3 class="card-title">{{ projeto.titulo }}</h3>
                 <p class="card-text">{{ projeto.descricao }}</p>
                 <div class="badges badges-small">
-                    {% for tech in projeto.tecnologias %}
+                    {% for tech in projeto.tecnologias_lista %}
                     <span class="badge badge-outline">{{ tech }}</span>
                     {% endfor %}
                 </div>
@@ -83,9 +83,10 @@
 <section id="contato" class="section section-alt">
     <div class="container">
         <h2 class="section-title">Contato</h2>
-        <p class="section-text">Vamos conversar? Encontre-me pelos canais abaixo.</p>
+        <p class="section-text">Vamos conversar? Envie uma mensagem ou encontre-me pelos canais abaixo.</p>
         <div class="contact-links">
-            <a href="mailto:{{ contato.email }}" class="btn btn-primary">Email</a>
+            <a href="{{ url_for('contato') }}" class="btn btn-primary">Enviar mensagem</a>
+            <a href="mailto:{{ contato.email }}" class="btn btn-outline">Email</a>
             <a href="{{ contato.github }}" class="btn btn-outline" target="_blank" rel="noopener">GitHub</a>
             <a href="{{ contato.linkedin }}" class="btn btn-outline" target="_blank" rel="noopener">LinkedIn</a>
         </div>
