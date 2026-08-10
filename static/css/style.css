@@ -7,7 +7,21 @@
     --muted: #94a3b8;
     --accent: #38bdf8;
     --accent-hover: #0ea5e9;
+    --navbar-bg: rgba(15, 23, 42, 0.85);
     --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+:root[data-theme="light"] {
+    --bg: #f1f5f9;
+    --bg-alt: #e2e8f0;
+    --surface: #ffffff;
+    --border: #cbd5e1;
+    --text: #0f172a;
+    --muted: #64748b;
+    --accent: #0284c7;
+    --accent-hover: #0369a1;
+    --navbar-bg: rgba(241, 245, 249, 0.85);
+    --shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
 }
 
 * {
@@ -37,7 +51,7 @@ body {
     position: sticky;
     top: 0;
     z-index: 100;
-    background-color: rgba(15, 23, 42, 0.85);
+    background-color: var(--navbar-bg);
     backdrop-filter: blur(8px);
     border-bottom: 1px solid var(--border);
 }
@@ -71,6 +85,23 @@ body {
 }
 
 .nav-links a:hover {
+    color: var(--accent);
+}
+
+.theme-toggle {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-size: 1.1rem;
+    line-height: 1;
+    padding: 0.35rem 0.6rem;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+}
+
+.theme-toggle:hover {
+    border-color: var(--accent);
     color: var(--accent);
 }
 

@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ perfil.nome }} | Portfólio</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script>
+        (function () {
+            var theme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.dataset.theme = theme;
+        })();
+    </script>
 </head>
 <body>
     <nav class="navbar">
@@ -22,6 +28,9 @@
                 {% else %}
                 <li><a href="{{ url_for('login') }}">Login</a></li>
                 {% endif %}
+                <li>
+                    <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Alternar tema claro/escuro">🌙</button>
+                </li>
             </ul>
         </div>
     </nav>
@@ -45,5 +54,25 @@
             <p>&copy; {{ current_year }} {{ perfil.nome }}. Todos os direitos reservados.</p>
         </div>
     </footer>
+
+    <script>
+        (function () {
+            var toggle = document.getElementById('theme-toggle');
+            var icons = { dark: '🌙', light: '☀️' };
+
+            function apply(theme) {
+                document.documentElement.dataset.theme = theme;
+                toggle.textContent = icons[theme];
+            }
+
+            apply(localStorage.getItem('theme') || 'dark');
+
+            toggle.addEventListener('click', function () {
+                var current = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+                localStorage.setItem('theme', current);
+                apply(current);
+            });
+        })();
+    </script>
 </body>
 </html>
