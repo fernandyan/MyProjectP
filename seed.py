@@ -1,8 +1,9 @@
 from app import app
-from models import Educacao, Experiencia, Projeto, User, db
+from models import Educacao, Experiencia, Post, Projeto, User, db
 
 ADMIN_USERNAME = "admin"
 ADMIN_PASSWORD = "admin123"
+ADMIN_EMAIL = "admin@example.com"
 
 
 def seed():
@@ -10,7 +11,11 @@ def seed():
         db.create_all()
 
         if not User.query.filter_by(username=ADMIN_USERNAME).first():
-            admin = User(username=ADMIN_USERNAME)
+            admin = User(
+                username=ADMIN_USERNAME,
+                email=ADMIN_EMAIL,
+                is_admin=True,
+            )
             admin.set_password(ADMIN_PASSWORD)
             db.session.add(admin)
             print(f"Usuário admin criado: {ADMIN_USERNAME} / {ADMIN_PASSWORD}")
@@ -88,6 +93,25 @@ def seed():
                 ]
             )
             print("Educação de exemplo criada.")
+
+        if Post.query.count() == 0:
+            db.session.add_all(
+                [
+                    Post(
+                        titulo="Bem-vindo ao meu blog",
+                        conteudo="Este é o meu primeiro post. Aqui vou compartilhar "
+                                 "aprendizados, tutoriais e novidades sobre "
+                                 "desenvolvimento de software.",
+                    ),
+                    Post(
+                        titulo="Por que uso Flask para projetos web",
+                        conteudo="Flask é leve, flexível e fácil de aprender. Neste "
+                                 "post exploro os motivos pelos quais escolhi esse "
+                                 "framework para os meus projetos.",
+                    ),
+                ]
+            )
+            print("Postagens de exemplo criadas.")
 
         db.session.commit()
         print("Seed concluído.")

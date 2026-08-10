@@ -1,4 +1,5 @@
 from datetime import datetime
+from functools import wraps
 
 from flask import Flask, flash, redirect, render_template, url_for
 from flask_login import (
@@ -14,9 +15,11 @@ from forms import (
     EducacaoForm,
     ExperienciaForm,
     LoginForm,
+    PostForm,
     ProjetoForm,
+    RegistroForm,
 )
-from models import Educacao, Experiencia, Mensagem, Projeto, User, db
+from models import Educacao, Experiencia, Mensagem, Post, Projeto, User, db
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "dev-secret-key-change-me"
@@ -33,6 +36,18 @@ login_manager.init_app(app)
 @login_manager.user_loader
 def load_user(user_id):
     return db.session.get(User, int(user_id))
+
+
+def admin_required(f):
+    @wraps(f)
+    @login_required
+    def wrapper(*args, **kwargs):
+        if not current_user.is_admin:
+            flash("Acesso restrito a administradores.", "danger")
+            return redirect(url_for("index"))
+        return f(*args, **kwargs)
+
+    return wrapper
 
 
 perfil = {
@@ -84,6 +99,21 @@ def index():
     )
 
 
+@app.route("/blog")
+def blog():
+    posts = Post.query.order_by(Post.criado_em.desc()).all()
+    return render_template("blog.html", posts=posts)
+
+
+@app.route("/blog/<int:post_id>")
+def post_detalhe(post_id):
+    post = db.session.get(Post, post_id)
+    if not post:
+        flash("Postagem não encontrada.", "danger")
+        return redirect(url_for("blog"))
+    return render_template("post.html", post=post)
+
+
 @app.route("/contato", methods=["GET", "POST"])
 def contato():
     form = ContatoForm()
@@ -100,17 +130,40 @@ def contato():
     return render_template("contato.html", form=form, contato=contato)
 
 
+@app.route("/registro", methods=["GET", "POST"])
+def registro():
+    if current_user.is_authenticated:
+        return redirect(url_for("index"))
+    form = RegistroForm()
+    if form.validate_on_submit():
+        if User.query.filter_by(username=form.username.data).first():
+            flash("Nome de usuário já está em uso.", "danger")
+            return render_template("auth/registro.html", form=form)
+        if User.query.filter_by(email=form.email.data).first():
+            flash("Email já cadastrado.", "danger")
+            return render_template("auth/registro.html", form=form)
+        user = User(username=form.username.data, email=form.email.data)
+        user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        login_user(user)
+        flash("Conta criada com sucesso!", "success")
+        return redirect(url_for("index"))
+    return render_template("auth/registro.html", form=form)
+
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for("admin_dashboard"))
+        return redirect(url_for("index"))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user and user.check_password(form.password.data):
             login_user(user)
             flash("Login realizado com sucesso.", "success")
-            return redirect(url_for("admin_dashboard"))
+            destino = "admin_dashboard" if user.is_admin else "index"
+            return redirect(url_for(destino))
         flash("Usuário ou senha inválidos.", "danger")
     return render_template("auth/login.html", form=form)
 
@@ -124,17 +177,19 @@ def logout():
 
 
 @app.route("/admin")
-@login_required
+@admin_required
 def admin_dashboard():
     projetos = Projeto.query.order_by(Projeto.id).all()
     experiencias = Experiencia.query.order_by(Experiencia.id).all()
     educacao = Educacao.query.order_by(Educacao.id).all()
+    posts = Post.query.order_by(Post.criado_em.desc()).all()
     mensagens = Mensagem.query.order_by(Mensagem.criada_em.desc()).all()
     return render_template(
         "admin/dashboard.html",
         projetos=projetos,
         experiencias=experiencias,
         educacao=educacao,
+        posts=posts,
         mensagens=mensagens,
     )
 
@@ -142,6 +197,7 @@ def admin_dashboard():
 CAMPOS_ITEM = [
     "titulo",
     "descricao",
+    "conteudo",
     "tecnologias",
     "link",
     "github",
@@ -196,63 +252,81 @@ def _excluir_item(model, item_id, nome_rotulo):
 
 
 @app.route("/admin/projetos/novo", methods=["GET", "POST"])
-@login_required
+@admin_required
 def projeto_novo():
     return _processar_item(Projeto, None, ProjetoForm(), "Projeto")
 
 
 @app.route("/admin/projetos/<int:item_id>/editar", methods=["GET", "POST"])
-@login_required
+@admin_required
 def projeto_editar(item_id):
     return _processar_item(Projeto, item_id, ProjetoForm(), "Projeto")
 
 
 @app.route("/admin/projetos/<int:item_id>/excluir")
-@login_required
+@admin_required
 def projeto_excluir(item_id):
     return _excluir_item(Projeto, item_id, "Projeto")
 
 
 @app.route("/admin/experiencias/novo", methods=["GET", "POST"])
-@login_required
+@admin_required
 def experiencia_novo():
     return _processar_item(Experiencia, None, ExperienciaForm(), "Experiência")
 
 
 @app.route("/admin/experiencias/<int:item_id>/editar", methods=["GET", "POST"])
-@login_required
+@admin_required
 def experiencia_editar(item_id):
     return _processar_item(Experiencia, item_id, ExperienciaForm(), "Experiência")
 
 
 @app.route("/admin/experiencias/<int:item_id>/excluir")
-@login_required
+@admin_required
 def experiencia_excluir(item_id):
     return _excluir_item(Experiencia, item_id, "Experiência")
 
 
 @app.route("/admin/educacao/novo", methods=["GET", "POST"])
-@login_required
+@admin_required
 def educacao_novo():
     return _processar_item(Educacao, None, EducacaoForm(), "Educação")
 
 
 @app.route("/admin/educacao/<int:item_id>/editar", methods=["GET", "POST"])
-@login_required
+@admin_required
 def educacao_editar(item_id):
     return _processar_item(Educacao, item_id, EducacaoForm(), "Educação")
 
 
 @app.route("/admin/educacao/<int:item_id>/excluir")
-@login_required
+@admin_required
 def educacao_excluir(item_id):
     return _excluir_item(Educacao, item_id, "Educação")
 
 
 @app.route("/admin/mensagens/<int:item_id>/excluir")
-@login_required
+@admin_required
 def mensagem_excluir(item_id):
     return _excluir_item(Mensagem, item_id, "Mensagem")
+
+
+@app.route("/admin/posts/novo", methods=["GET", "POST"])
+@admin_required
+def post_novo():
+    return _processar_item(Post, None, PostForm(), "Postagem")
+
+
+@app.route("/admin/posts/<int:item_id>/editar", methods=["GET", "POST"])
+@admin_required
+def post_editar(item_id):
+    return _processar_item(Post, item_id, PostForm(), "Postagem")
+
+
+@app.route("/admin/posts/<int:item_id>/excluir")
+@admin_required
+def post_excluir(item_id):
+    return _excluir_item(Post, item_id, "Postagem")
 
 
 if __name__ == "__main__":

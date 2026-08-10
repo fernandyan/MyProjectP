@@ -443,6 +443,11 @@ textarea.form-input {
     border-color: #ef4444;
 }
 
+.post-content {
+    white-space: pre-line;
+    margin-top: 1rem;
+}
+
 @media (max-width: 640px) {
     .nav-container {
         flex-direction: column;

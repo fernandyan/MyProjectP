@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section id="blog" class="section">
+    <div class="container">
+        <h2 class="section-title">Blog</h2>
+        <div class="grid">
+            {% for post in posts %}
+            <article class="card">
+                <h3 class="card-title">{{ post.titulo }}</h3>
+                <p class="card-text muted">{{ post.criado_em.strftime('%d/%m/%Y') }}</p>
+                <div class="card-links">
+                    <a href="{{ url_for('post_detalhe', post_id=post.id) }}" class="btn btn-sm btn-primary">Ler mais</a>
+                </div>
+            </article>
+            {% else %}
+            <p class="muted">Nenhuma postagem publicada ainda.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

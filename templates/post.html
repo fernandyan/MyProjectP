@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="section">
+    <div class="container container-narrow">
+        <a href="{{ url_for('blog') }}" class="btn btn-sm btn-outline">&larr; Voltar ao blog</a>
+        <h2 class="section-title">{{ post.titulo }}</h2>
+        <p class="muted">{{ post.criado_em.strftime('%d/%m/%Y') }}</p>
+        <div class="post-content">{{ post.conteudo }}</div>
+    </div>
+</section>
+{% endblock %}

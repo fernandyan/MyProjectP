@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import PasswordField, StringField, SubmitField, TextAreaField
-from wtforms.validators import DataRequired, Email, Length
+from wtforms.validators import DataRequired, Email, EqualTo, Length
 
 
 class LoginForm(FlaskForm):
@@ -11,6 +11,38 @@ class LoginForm(FlaskForm):
         "Senha", validators=[DataRequired(message="Informe a senha.")]
     )
     submit = SubmitField("Entrar")
+
+
+class RegistroForm(FlaskForm):
+    username = StringField(
+        "Usuário",
+        validators=[
+            DataRequired(message="Informe o usuário."),
+            Length(min=3, max=80, message="O usuário deve ter entre 3 e 80 caracteres."),
+        ],
+    )
+    email = StringField(
+        "Email",
+        validators=[
+            DataRequired(message="Informe seu email."),
+            Email(message="Email inválido."),
+        ],
+    )
+    password = PasswordField(
+        "Senha",
+        validators=[
+            DataRequired(message="Informe a senha."),
+            Length(min=6, message="A senha deve ter pelo menos 6 caracteres."),
+        ],
+    )
+    confirm_password = PasswordField(
+        "Confirmar senha",
+        validators=[
+            DataRequired(message="Confirme a senha."),
+            EqualTo("password", message="As senhas não coincidem."),
+        ],
+    )
+    submit = SubmitField("Cadastrar")
 
 
 class ContatoForm(FlaskForm):
@@ -61,6 +93,20 @@ class ExperienciaForm(FlaskForm):
         "Período", validators=[DataRequired(message="Informe o período.")]
     )
     descricao = TextAreaField("Descrição")
+    submit = SubmitField("Salvar")
+
+
+class PostForm(FlaskForm):
+    titulo = StringField(
+        "Título", validators=[DataRequired(message="Informe o título.")]
+    )
+    conteudo = TextAreaField(
+        "Conteúdo",
+        validators=[
+            DataRequired(message="Escreva o conteúdo."),
+            Length(max=10000, message="Conteúdo muito longo."),
+        ],
+    )
     submit = SubmitField("Salvar")
 
 

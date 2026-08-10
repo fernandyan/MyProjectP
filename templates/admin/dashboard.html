@@ -65,8 +65,26 @@
             <a href="{{ url_for('educacao_novo') }}" class="btn btn-sm btn-primary">+ Nova formação</a>
         </div>
 
-        <h3 class="subsection-title">Mensagens de contato</h3>
+        <h3 class="subsection-title">Blog</h3>
         <div class="admin-list">
+            {% for post in posts %}
+            <div class="admin-item">
+                <div>
+                    <strong>{{ post.titulo }}</strong>
+                    <span class="muted">{{ post.criado_em.strftime('%d/%m/%Y') }}</span>
+                </div>
+                <div class="admin-actions">
+                    <a href="{{ url_for('post_editar', item_id=post.id) }}" class="btn btn-sm btn-outline">Editar</a>
+                    <a href="{{ url_for('post_excluir', item_id=post.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('Excluir esta postagem?')">Excluir</a>
+                </div>
+            </div>
+            {% else %}
+            <p class="muted">Nenhuma postagem publicada.</p>
+            {% endfor %}
+            <a href="{{ url_for('post_novo') }}" class="btn btn-sm btn-primary">+ Nova postagem</a>
+        </div>
+
+        <h3 class="subsection-title">Mensagens de contato</h3>        <div class="admin-list">
             {% for mensagem in mensagens %}
             <div class="admin-item">
                 <div>

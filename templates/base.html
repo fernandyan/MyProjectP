@@ -21,11 +21,13 @@
                 <li><a href="/#sobre">Sobre</a></li>
                 <li><a href="/#projetos">Projetos</a></li>
                 <li><a href="/#experiencia">Experiência</a></li>
+                <li><a href="{{ url_for('blog') }}">Blog</a></li>
                 <li><a href="{{ url_for('contato') }}">Contato</a></li>
                 {% if current_user.is_authenticated %}
                 <li><a href="{{ url_for('admin_dashboard') }}">Admin</a></li>
                 <li><a href="{{ url_for('logout') }}">Sair</a></li>
                 {% else %}
+                <li><a href="{{ url_for('registro') }}">Registrar</a></li>
                 <li><a href="{{ url_for('login') }}">Login</a></li>
                 {% endif %}
                 <li>
