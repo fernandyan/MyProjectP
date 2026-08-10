@@ -5,7 +5,7 @@
     <div class="container">
         <div class="admin-header">
             <h2 class="section-title">Dashboard</h2>
-            <a href="{{ url_for('index') }}" class="btn btn-outline btn-sm">Ver site</a>
+            <a href="{{ url_for('main.index') }}" class="btn btn-outline btn-sm">Ver site</a>
         </div>
 
         <h3 class="subsection-title">Projetos</h3>
@@ -17,14 +17,14 @@
                     <span class="muted">{{ projeto.tecnologias }}</span>
                 </div>
                 <div class="admin-actions">
-                    <a href="{{ url_for('projeto_editar', item_id=projeto.id) }}" class="btn btn-sm btn-outline">Editar</a>
-                    <a href="{{ url_for('projeto_excluir', item_id=projeto.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('Excluir este projeto?')">Excluir</a>
+                    <a href="{{ url_for('admin.projeto_editar', item_id=projeto.id) }}" class="btn btn-sm btn-outline">Editar</a>
+                    <a href="{{ url_for('admin.projeto_excluir', item_id=projeto.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('Excluir este projeto?')">Excluir</a>
                 </div>
             </div>
             {% else %}
             <p class="muted">Nenhum projeto cadastrado.</p>
             {% endfor %}
-            <a href="{{ url_for('projeto_novo') }}" class="btn btn-sm btn-primary">+ Novo projeto</a>
+            <a href="{{ url_for('admin.projeto_novo') }}" class="btn btn-sm btn-primary">+ Novo projeto</a>
         </div>
 
         <h3 class="subsection-title">Experiências</h3>
@@ -36,14 +36,14 @@
                     <span class="muted">{{ item.empresa }} · {{ item.periodo }}</span>
                 </div>
                 <div class="admin-actions">
-                    <a href="{{ url_for('experiencia_editar', item_id=item.id) }}" class="btn btn-sm btn-outline">Editar</a>
-                    <a href="{{ url_for('experiencia_excluir', item_id=item.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('Excluir esta experiência?')">Excluir</a>
+                    <a href="{{ url_for('admin.experiencia_editar', item_id=item.id) }}" class="btn btn-sm btn-outline">Editar</a>
+                    <a href="{{ url_for('admin.experiencia_excluir', item_id=item.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('Excluir esta experiência?')">Excluir</a>
                 </div>
             </div>
             {% else %}
             <p class="muted">Nenhuma experiência cadastrada.</p>
             {% endfor %}
-            <a href="{{ url_for('experiencia_novo') }}" class="btn btn-sm btn-primary">+ Nova experiência</a>
+            <a href="{{ url_for('admin.experiencia_novo') }}" class="btn btn-sm btn-primary">+ Nova experiência</a>
         </div>
 
         <h3 class="subsection-title">Educação</h3>
@@ -55,14 +55,14 @@
                     <span class="muted">{{ item.instituicao }} · {{ item.periodo }}</span>
                 </div>
                 <div class="admin-actions">
-                    <a href="{{ url_for('educacao_editar', item_id=item.id) }}" class="btn btn-sm btn-outline">Editar</a>
-                    <a href="{{ url_for('educacao_excluir', item_id=item.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('Excluir este item?')">Excluir</a>
+                    <a href="{{ url_for('admin.educacao_editar', item_id=item.id) }}" class="btn btn-sm btn-outline">Editar</a>
+                    <a href="{{ url_for('admin.educacao_excluir', item_id=item.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('Excluir este item?')">Excluir</a>
                 </div>
             </div>
             {% else %}
             <p class="muted">Nenhuma formação cadastrada.</p>
             {% endfor %}
-            <a href="{{ url_for('educacao_novo') }}" class="btn btn-sm btn-primary">+ Nova formação</a>
+            <a href="{{ url_for('admin.educacao_novo') }}" class="btn btn-sm btn-primary">+ Nova formação</a>
         </div>
 
         <h3 class="subsection-title">Blog</h3>
@@ -71,17 +71,17 @@
             <div class="admin-item">
                 <div>
                     <strong>{{ post.titulo }}</strong>
-                    <span class="muted">{{ post.criado_em.strftime('%d/%m/%Y') }}</span>
+                    <span class="muted">{{ post.criado_em.strftime('%d/%m/%Y') }} · por {{ post.author.username }}</span>
                 </div>
                 <div class="admin-actions">
-                    <a href="{{ url_for('post_editar', item_id=post.id) }}" class="btn btn-sm btn-outline">Editar</a>
-                    <a href="{{ url_for('post_excluir', item_id=post.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('Excluir esta postagem?')">Excluir</a>
+                    <a href="{{ url_for('admin.post_editar', item_id=post.id) }}" class="btn btn-sm btn-outline">Editar</a>
+                    <a href="{{ url_for('admin.post_excluir', item_id=post.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('Excluir esta postagem?')">Excluir</a>
                 </div>
             </div>
             {% else %}
             <p class="muted">Nenhuma postagem publicada.</p>
             {% endfor %}
-            <a href="{{ url_for('post_novo') }}" class="btn btn-sm btn-primary">+ Nova postagem</a>
+            <a href="{{ url_for('admin.post_novo') }}" class="btn btn-sm btn-primary">+ Nova postagem</a>
         </div>
 
         <h3 class="subsection-title">Mensagens de contato</h3>        <div class="admin-list">
@@ -93,7 +93,7 @@
                     <p class="admin-msg">{{ mensagem.mensagem }}</p>
                 </div>
                 <div class="admin-actions">
-                    <a href="{{ url_for('mensagem_excluir', item_id=mensagem.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('Excluir esta mensagem?')">Excluir</a>
+                    <a href="{{ url_for('admin.mensagem_excluir', item_id=mensagem.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('Excluir esta mensagem?')">Excluir</a>
                 </div>
             </div>
             {% else %}

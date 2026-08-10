@@ -21,14 +21,18 @@
                 <li><a href="/#sobre">Sobre</a></li>
                 <li><a href="/#projetos">Projetos</a></li>
                 <li><a href="/#experiencia">Experiência</a></li>
-                <li><a href="{{ url_for('blog') }}">Blog</a></li>
-                <li><a href="{{ url_for('contato') }}">Contato</a></li>
+                <li><a href="{{ url_for('blog.blog') }}">Blog</a></li>
+                <li><a href="{{ url_for('main.contato') }}">Contato</a></li>
                 {% if current_user.is_authenticated %}
-                <li><a href="{{ url_for('admin_dashboard') }}">Admin</a></li>
-                <li><a href="{{ url_for('logout') }}">Sair</a></li>
+                {% if current_user.is_admin %}
+                <li><a href="{{ url_for('admin.admin_dashboard') }}">Admin</a></li>
                 {% else %}
-                <li><a href="{{ url_for('registro') }}">Registrar</a></li>
-                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li><a href="{{ url_for('blog.blog_novo') }}">Nova postagem</a></li>
+                {% endif %}
+                <li><a href="{{ url_for('auth.logout') }}">Sair</a></li>
+                {% else %}
+                <li><a href="{{ url_for('auth.registro') }}">Registrar</a></li>
+                <li><a href="{{ url_for('auth.login') }}">Login</a></li>
                 {% endif %}
                 <li>
                     <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Alternar tema claro/escuro">🌙</button>

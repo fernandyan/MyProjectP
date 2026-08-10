@@ -10,7 +10,8 @@ def seed():
     with app.app_context():
         db.create_all()
 
-        if not User.query.filter_by(username=ADMIN_USERNAME).first():
+        admin = User.query.filter_by(username=ADMIN_USERNAME).first()
+        if not admin:
             admin = User(
                 username=ADMIN_USERNAME,
                 email=ADMIN_EMAIL,
@@ -102,12 +103,14 @@ def seed():
                         conteudo="Este é o meu primeiro post. Aqui vou compartilhar "
                                  "aprendizados, tutoriais e novidades sobre "
                                  "desenvolvimento de software.",
+                        author=admin,
                     ),
                     Post(
                         titulo="Por que uso Flask para projetos web",
                         conteudo="Flask é leve, flexível e fácil de aprender. Neste "
                                  "post exploro os motivos pelos quais escolhi esse "
                                  "framework para os meus projetos.",
+                        author=admin,
                     ),
                 ]
             )

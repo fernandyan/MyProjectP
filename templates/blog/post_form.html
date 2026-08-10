@@ -3,7 +3,7 @@
 {% block content %}
 <section class="section">
     <div class="container container-narrow">
-        <h2 class="section-title">{{ "Editar" if acao == "editar" else "Novo" }} {{ titulo_pagina }}</h2>
+        <h2 class="section-title">{{ "Editar postagem" if acao == "editar" else "Nova postagem" }}</h2>
 
         <form method="post" class="form">
             {{ form.hidden_tag() }}
@@ -22,7 +22,7 @@
 
             <div class="form-actions">
                 {{ form.submit(class="btn btn-primary") }}
-                <a href="{{ url_for('admin.admin_dashboard') }}" class="btn btn-outline">Cancelar</a>
+                <a href="{{ url_for('blog.blog') }}" class="btn btn-outline">Cancelar</a>
             </div>
         </form>
     </div>

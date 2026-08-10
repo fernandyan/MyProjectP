@@ -4,13 +4,18 @@
 <section id="blog" class="section">
     <div class="container">
         <h2 class="section-title">Blog</h2>
+        {% if current_user.is_authenticated %}
+        <div class="admin-actions" style="margin-bottom: 1rem;">
+            <a href="{{ url_for('blog.blog_novo') }}" class="btn btn-sm btn-primary">+ Nova postagem</a>
+        </div>
+        {% endif %}
         <div class="grid">
             {% for post in posts %}
             <article class="card">
                 <h3 class="card-title">{{ post.titulo }}</h3>
-                <p class="card-text muted">{{ post.criado_em.strftime('%d/%m/%Y') }}</p>
+                <p class="card-text muted">{{ post.criado_em.strftime('%d/%m/%Y') }} · por {{ post.author.username }}</p>
                 <div class="card-links">
-                    <a href="{{ url_for('post_detalhe', post_id=post.id) }}" class="btn btn-sm btn-primary">Ler mais</a>
+                    <a href="{{ url_for('blog.post_detalhe', post_id=post.id) }}" class="btn btn-sm btn-primary">Ler mais</a>
                 </div>
             </article>
             {% else %}

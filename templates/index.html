@@ -9,7 +9,7 @@
             <p class="hero-tagline">{{ perfil.titulo }} — {{ perfil.tagline }}</p>
             <div class="hero-actions">
                 <a href="#projetos" class="btn btn-primary">Ver projetos</a>
-                <a href="{{ url_for('contato') }}" class="btn btn-outline">Entrar em contato</a>
+                <a href="{{ url_for('main.contato') }}" class="btn btn-outline">Entrar em contato</a>
             </div>
         </div>
     </div>
@@ -85,7 +85,7 @@
         <h2 class="section-title">Contato</h2>
         <p class="section-text">Vamos conversar? Envie uma mensagem ou encontre-me pelos canais abaixo.</p>
         <div class="contact-links">
-            <a href="{{ url_for('contato') }}" class="btn btn-primary">Enviar mensagem</a>
+            <a href="{{ url_for('main.contato') }}" class="btn btn-primary">Enviar mensagem</a>
             <a href="mailto:{{ contato.email }}" class="btn btn-outline">Email</a>
             <a href="{{ contato.github }}" class="btn btn-outline" target="_blank" rel="noopener">GitHub</a>
             <a href="{{ contato.linkedin }}" class="btn btn-outline" target="_blank" rel="noopener">LinkedIn</a>
