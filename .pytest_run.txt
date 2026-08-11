@@ -1,0 +1,12 @@
+..........................                                               [100%]
+============================== warnings summary ===============================
+tests/test_blog_flow.py: 18 warnings
+  C:\Users\fernandes\Desktop\MyProjectB\venv\Lib\site-packages\sqlalchemy\sql\schema.py:3623: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    return util.wrap_callable(lambda ctx: fn(), fn)  # type: ignore
+
+tests/test_blog_flow.py::test_admin_cria_post
+  C:\Users\fernandes\Desktop\MyProjectB\blueprints\admin.py:92: SAWarning: Object of type <Post> not in session, add operation along 'User.posts' will not proceed
+    db.session.commit()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+26 passed, 19 warnings in 13.08s

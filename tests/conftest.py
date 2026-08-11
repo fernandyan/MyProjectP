@@ -11,6 +11,7 @@ from sqlalchemy.pool import StaticPool
 from blueprints.admin import admin_bp
 from blueprints.auth import auth_bp
 from blueprints.blog import blog_bp
+from blueprints.loja import loja_bp
 from blueprints.main import main_bp, perfil
 from models import User, db
 
@@ -45,6 +46,9 @@ def _montar_app():
             "connect_args": {"check_same_thread": False},
         },
         WTF_CSRF_ENABLED=True,
+        STRIPE_SECRET_KEY="sk_test_xxx",
+        STRIPE_PUBLISHABLE_KEY="pk_test_xxx",
+        BASE_URL="http://127.0.0.1:5000",
     )
 
     db.init_app(test_app)
@@ -64,6 +68,7 @@ def _montar_app():
     test_app.register_blueprint(main_bp)
     test_app.register_blueprint(auth_bp)
     test_app.register_blueprint(blog_bp)
+    test_app.register_blueprint(loja_bp)
     test_app.register_blueprint(admin_bp)
 
     return test_app

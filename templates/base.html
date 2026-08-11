@@ -22,6 +22,7 @@
                 <li><a href="/#projetos">Projetos</a></li>
                 <li><a href="/#experiencia">Experiência</a></li>
                 <li><a href="{{ url_for('blog.blog') }}">Blog</a></li>
+                <li><a href="{{ url_for('loja.loja') }}">Loja</a></li>
                 <li><a href="{{ url_for('main.contato') }}">Contato</a></li>
                 {% if current_user.is_authenticated %}
                 {% if current_user.is_admin %}

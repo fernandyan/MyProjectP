@@ -1,5 +1,5 @@
 from app import app
-from models import Educacao, Experiencia, Post, Projeto, User, db
+from models import Educacao, Experiencia, Post, Produto, Projeto, User, db
 
 ADMIN_USERNAME = "admin"
 ADMIN_PASSWORD = "admin123"
@@ -115,6 +115,31 @@ def seed():
                 ]
             )
             print("Postagens de exemplo criadas.")
+
+        if Produto.query.count() == 0:
+            db.session.add_all(
+                [
+                    Produto(
+                        nome="E-book: Introdução ao Flask",
+                        descricao="Guia completo para criar aplicações web com Flask.",
+                        preco_centavos=2990,
+                        disponivel=True,
+                    ),
+                    Produto(
+                        nome="Curso: API REST com Python",
+                        descricao="Curso prático de construção de APIs REST escaláveis.",
+                        preco_centavos=4990,
+                        disponivel=True,
+                    ),
+                    Produto(
+                        nome="Consulta de carreira",
+                        descricao="Sessão individual de mentoria sobre desenvolvimento web.",
+                        preco_centavos=9900,
+                        disponivel=True,
+                    ),
+                ]
+            )
+            print("Produtos de exemplo criados.")
 
         db.session.commit()
         print("Seed concluído.")

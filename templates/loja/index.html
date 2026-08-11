@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">Loja</h2>
+        <p class="section-text">Pague com segurança via Stripe Checkout.</p>
+
+        <div class="grid">
+            {% for produto in produtos %}
+            <article class="card">
+                <h3 class="card-title">{{ produto.nome }}</h3>
+                <p class="card-text muted">{{ produto.descricao }}</p>
+                <p class="card-price">US$ {{ "%.2f"|format(produto.preco_usd) }}</p>
+                <div class="card-links">
+                    <form method="post" action="{{ url_for('loja.checkout', produto_id=produto.id) }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button type="submit" class="btn btn-sm btn-primary">Comprar</button>
+                    </form>
+                </div>
+            </article>
+            {% else %}
+            <p class="muted">Nenhum produto disponível no momento.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

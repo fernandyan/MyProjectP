@@ -7,9 +7,18 @@ from forms import (
     EducacaoForm,
     ExperienciaForm,
     PostForm,
+    ProdutoForm,
     ProjetoForm,
 )
-from models import Educacao, Experiencia, Mensagem, Post, Projeto, db
+from models import (
+    Educacao,
+    Experiencia,
+    Mensagem,
+    Post,
+    Produto,
+    Projeto,
+    db,
+)
 
 admin_bp = Blueprint("admin", __name__, url_prefix="/admin")
 
@@ -34,6 +43,7 @@ def admin_dashboard():
     educacao = Educacao.query.order_by(Educacao.id).all()
     posts = Post.query.order_by(Post.criado_em.desc()).all()
     mensagens = Mensagem.query.order_by(Mensagem.criada_em.desc()).all()
+    produtos = Produto.query.order_by(Produto.id).all()
     return render_template(
         "admin/dashboard.html",
         projetos=projetos,
@@ -41,6 +51,7 @@ def admin_dashboard():
         educacao=educacao,
         posts=posts,
         mensagens=mensagens,
+        produtos=produtos,
     )
 
 
@@ -56,6 +67,9 @@ CAMPOS_ITEM = [
     "periodo",
     "curso",
     "instituicao",
+    "nome",
+    "preco_centavos",
+    "disponivel",
 ]
 
 
@@ -179,3 +193,21 @@ def post_editar(item_id):
 @admin_required
 def post_excluir(item_id):
     return _excluir_item(Post, item_id, "Postagem")
+
+
+@admin_bp.route("/produtos/novo", methods=["GET", "POST"])
+@admin_required
+def produto_novo():
+    return _processar_item(Produto, None, ProdutoForm(), "Produto")
+
+
+@admin_bp.route("/produtos/<int:item_id>/editar", methods=["GET", "POST"])
+@admin_required
+def produto_editar(item_id):
+    return _processar_item(Produto, item_id, ProdutoForm(), "Produto")
+
+
+@admin_bp.route("/produtos/<int:item_id>/excluir")
+@admin_required
+def produto_excluir(item_id):
+    return _excluir_item(Produto, item_id, "Produto")

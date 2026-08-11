@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="section">
+    <div class="container container-narrow">
+        <h2 class="section-title">Pagamento cancelado</h2>
+        <p class="section-text">Nenhum valor foi cobrado. Você pode tentar novamente quando quiser.</p>
+        <div class="card-links">
+            <a href="{{ url_for('loja.loja') }}" class="btn btn-primary">Voltar à loja</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

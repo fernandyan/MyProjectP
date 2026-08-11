@@ -1,18 +1,19 @@
 from blueprints.admin import admin_bp
 from blueprints.auth import auth_bp
 from blueprints.blog import blog_bp
+from blueprints.loja import loja_bp
 from blueprints.main import main_bp
 
 from .conftest import login
 
 
 def test_blueprints_registrados(app):
-    for bp in (main_bp, auth_bp, blog_bp, admin_bp):
+    for bp in (main_bp, auth_bp, blog_bp, loja_bp, admin_bp):
         assert bp.name in app.blueprints
 
 
 def test_rotas_publicas(client):
-    for caminho in ["/", "/contato", "/blog"]:
+    for caminho in ["/", "/contato", "/blog", "/loja"]:
         response = client.get(caminho)
         assert response.status_code == 200, f"{caminho} -> {response.status_code}"
 
@@ -77,6 +78,7 @@ def test_rotas_admin_crud(client):
         "/admin/experiencias/novo",
         "/admin/educacao/novo",
         "/admin/posts/novo",
+        "/admin/produtos/novo",
     ]:
         assert client.get(caminho).status_code == 200, caminho
 

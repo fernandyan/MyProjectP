@@ -84,6 +84,25 @@
             <a href="{{ url_for('admin.post_novo') }}" class="btn btn-sm btn-primary">+ Nova postagem</a>
         </div>
 
+        <h3 class="subsection-title">Produtos</h3>
+        <div class="admin-list">
+            {% for produto in produtos %}
+            <div class="admin-item">
+                <div>
+                    <strong>{{ produto.nome }}</strong>
+                    <span class="muted">US$ {{ "%.2f"|format(produto.preco_usd) }}{% if not produto.disponivel %} · indisponível{% endif %}</span>
+                </div>
+                <div class="admin-actions">
+                    <a href="{{ url_for('admin.produto_editar', item_id=produto.id) }}" class="btn btn-sm btn-outline">Editar</a>
+                    <a href="{{ url_for('admin.produto_excluir', item_id=produto.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('Excluir este produto?')">Excluir</a>
+                </div>
+            </div>
+            {% else %}
+            <p class="muted">Nenhum produto cadastrado.</p>
+            {% endfor %}
+            <a href="{{ url_for('admin.produto_novo') }}" class="btn btn-sm btn-primary">+ Novo produto</a>
+        </div>
+
         <h3 class="subsection-title">Mensagens de contato</h3>        <div class="admin-list">
             {% for mensagem in mensagens %}
             <div class="admin-item">

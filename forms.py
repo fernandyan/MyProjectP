@@ -1,6 +1,13 @@
 from flask_wtf import FlaskForm
-from wtforms import PasswordField, StringField, SubmitField, TextAreaField
-from wtforms.validators import DataRequired, Email, EqualTo, Length
+from wtforms import (
+    BooleanField,
+    IntegerField,
+    PasswordField,
+    StringField,
+    SubmitField,
+    TextAreaField,
+)
+from wtforms.validators import DataRequired, Email, EqualTo, Length, NumberRange
 
 
 class LoginForm(FlaskForm):
@@ -120,4 +127,20 @@ class EducacaoForm(FlaskForm):
     periodo = StringField(
         "Período", validators=[DataRequired(message="Informe o período.")]
     )
+    submit = SubmitField("Salvar")
+
+
+class ProdutoForm(FlaskForm):
+    nome = StringField(
+        "Nome", validators=[DataRequired(message="Informe o nome.")]
+    )
+    descricao = TextAreaField("Descrição")
+    preco_centavos = IntegerField(
+        "Preço (em centavos de US$)",
+        validators=[
+            DataRequired(message="Informe o preço."),
+            NumberRange(min=0, message="O preço não pode ser negativo."),
+        ],
+    )
+    disponivel = BooleanField("Disponível para venda", default=True)
     submit = SubmitField("Salvar")

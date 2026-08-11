@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="section">
+    <div class="container container-narrow">
+        <h2 class="section-title">Pagamento realizado!</h2>
+        <p class="section-text">Obrigado pela sua compra. Você receberá mais informações em breve.</p>
+        <div class="card-links">
+            <a href="{{ url_for('loja.loja') }}" class="btn btn-primary">Voltar à loja</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
