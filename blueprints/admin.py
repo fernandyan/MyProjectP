@@ -82,7 +82,7 @@ def _processar_item(model, item_id, form, nome_rotulo):
     else:
         item = model()
         if isinstance(item, Post):
-            item.author = current_user
+            item.author_id = current_user.id
 
     if form.validate_on_submit():
         for campo in CAMPOS_ITEM:

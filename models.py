@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 
 from flask_login import UserMixin
 from flask_sqlalchemy import SQLAlchemy
@@ -67,9 +67,9 @@ class Post(db.Model):
         db.Integer, db.ForeignKey("users.id"), nullable=False
     )
     author = db.relationship("User", backref=db.backref("posts", lazy=True))
-    criado_em = db.Column(db.DateTime, default=datetime.utcnow)
+    criado_em = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     atualizado_em = db.Column(
-        db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow
+        db.DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc)
     )
 
 
@@ -80,7 +80,7 @@ class Mensagem(db.Model):
     nome = db.Column(db.String(120), nullable=False)
     email = db.Column(db.String(120), nullable=False)
     mensagem = db.Column(db.Text, nullable=False)
-    criada_em = db.Column(db.DateTime, default=datetime.utcnow)
+    criada_em = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
 
 
 class Produto(db.Model):
