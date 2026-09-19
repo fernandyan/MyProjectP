@@ -147,12 +147,15 @@ class ProdutoForm(FlaskForm):
     submit = SubmitField("Salvar")
 
 class data_science_mental(FlaskForm):
-    color_pick = SelectField('Colors', choices=[('red', 'Red'), ('blue', 'Blue'), ('green', 'Green')])
-    idade = IntegerField(
-            "Informe a sua idade por favor!",
-            validators=[
-                DataRequired(message="Informe o idade."),
-                NumberRange(min=0, message="O idade não pode ser negativo."),
-            ],
-        )
+    age = IntegerField("Informe a sua idade por favor!",validators=[DataRequired(message="Informe o idade."),NumberRange(min=0, message="O idade nao pode ser negativo."),],)
+    gender = SelectField('Sexo', choices=[('Female', 'Femenino'), ('Male', 'Masculino')])
+    occupation = SelectField('Ocupacao', choices=[
+        ('Student', 'Estudante'), 
+        ('Full-time employed', 'Empregado em tempo integral'),
+        ('Part-time employed', 'Empregado em tempo parcial'),
+        ('Self-employed', 'Trabalhadores por conta própria'),
+        ('Unemployed', 'Desempregada'),
+        ('Retired', 'Aposentada'),
+        ])
+    
     submit = SubmitField('Submit')
