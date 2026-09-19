@@ -1,6 +1,6 @@
 from flask import Blueprint, flash, redirect, render_template, url_for
 
-from forms import ContatoForm
+from forms import ContatoForm, data_science_mental
 from models import Educacao, Experiencia, Mensagem, Projeto, db
 import joblib
 import pandas as pd
@@ -40,7 +40,6 @@ contato_info = {
 
 @main_bp.route("/")
 def index():
-    print(sklearn.__version__)
     projetos = Projeto.query.order_by(Projeto.id).all()
     experiencias = Experiencia.query.order_by(Experiencia.id).all()
     educacao = Educacao.query.order_by(Educacao.id).all()
@@ -70,8 +69,8 @@ def contato():
     return render_template("contato.html", form=form, contato=contato_info)
 
 
-@main_bp.route("/data_science", methods=["GET", "POST"])
-def data_science():
+@main_bp.route("/data_science_mental", methods=["GET", "POST"])
+def data_science_metal():
     # Carregando o modelo de volta
     clf_carregado = joblib.load("classificador.pkl")
     dados = {
@@ -100,6 +99,10 @@ def data_science():
     'seeks_mental_health_support':'Yes',
         }
     df = pd.DataFrame(dados,index=[0])
-    print("tudo feito com sucesso no data science!!!!!!")
-    print(clf_carregado.predict(df))
-    return render_template("index.html", contato=contato_info)
+    # print("tudo feito com sucesso no data science!!!!!!")
+    # print(clf_carregado.predict(df))
+    form = data_science_mental()
+    if form.validate_on_submit():
+            flash("Dados enviada com sucesso!", "success")
+            return redirect(url_for("main.index"))
+    return render_template("data_science_mental.html", form=form, contato=contato_info)

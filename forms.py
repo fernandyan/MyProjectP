@@ -6,6 +6,7 @@ from wtforms import (
     StringField,
     SubmitField,
     TextAreaField,
+    SelectField
 )
 from wtforms.validators import DataRequired, Email, EqualTo, Length, NumberRange
 
@@ -144,3 +145,14 @@ class ProdutoForm(FlaskForm):
     )
     disponivel = BooleanField("Disponível para venda", default=True)
     submit = SubmitField("Salvar")
+
+class data_science_mental(FlaskForm):
+    color_pick = SelectField('Colors', choices=[('red', 'Red'), ('blue', 'Blue'), ('green', 'Green')])
+    idade = IntegerField(
+            "Informe a sua idade por favor!",
+            validators=[
+                DataRequired(message="Informe o idade."),
+                NumberRange(min=0, message="O idade não pode ser negativo."),
+            ],
+        )
+    submit = SubmitField('Submit')
