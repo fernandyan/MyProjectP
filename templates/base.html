@@ -24,6 +24,7 @@
                 <li><a href="{{ url_for('blog.blog') }}">Blog</a></li>
                 <li><a href="{{ url_for('loja.loja') }}">Loja</a></li>
                 <li><a href="{{ url_for('main.contato') }}">Contato</a></li>
+                <li><a href="{{ url_for('main.data_science_metal') }}">Data Science</a></li>
                 {% if current_user.is_authenticated %}
                 {% if current_user.is_admin %}
                 <li><a href="{{ url_for('admin.admin_dashboard') }}">Admin</a></li>

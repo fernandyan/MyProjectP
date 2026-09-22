@@ -66,6 +66,48 @@
                         <span class="form-error">{{ error }}</span>
                         {% endfor %}
                     </div>
+                    <div class="form-group">
+                        {{ form.daily_screen_hours.label(class="form-label") }}
+                        {{ form.daily_screen_hours(class="form-input") }}
+                        {% for error in form.daily_screen_hours.errors %}
+                        <span class="form-error">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.daily_notifications.label(class="form-label") }}
+                        {{ form.daily_notifications(class="form-input") }}
+                        {% for error in form.daily_notifications.errors %}
+                        <span class="form-error">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.night_time_use.label(class="form-label") }}
+                        {{ form.night_time_use(class="form-input") }}
+                        {% for error in form.night_time_use.errors %}
+                        <span class="form-error">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.minutes_to_first_check_after_waking.label(class="form-label") }}
+                        {{ form.minutes_to_first_check_after_waking(class="form-input") }}
+                        {% for error in form.minutes_to_first_check_after_waking.errors %}
+                        <span class="form-error">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.primary_purpose.label(class="form-label") }}
+                        {{ form.primary_purpose(class="form-input") }}
+                        {% for error in form.primary_purpose.errors %}
+                        <span class="form-error">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.avg_sleep_hours.label(class="form-label") }}
+                        {{ form.avg_sleep_hours(class="form-input") }}
+                        {% for error in form.avg_sleep_hours.errors %}
+                        <span class="form-error">{{ error }}</span>
+                        {% endfor %}
+                    </div>
                 </div>
                 {{ form.submit(class="btn btn-primary") }}
             </form>

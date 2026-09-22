@@ -2,6 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import (
     BooleanField,
     IntegerField,
+    FloatField,
     PasswordField,
     StringField,
     SubmitField,
@@ -146,9 +147,10 @@ class ProdutoForm(FlaskForm):
     disponivel = BooleanField("Disponível para venda", default=True)
     submit = SubmitField("Salvar")
 
+# minha class
 class data_science_mental(FlaskForm):
     age = IntegerField("Informe a sua idade por favor!",validators=[DataRequired(message="Informe o idade."),NumberRange(min=0, message="O idade nao pode ser negativo."),],)
-    gender = SelectField('Sexo', choices=[('Female', 'Femenino'), ('Male', 'Masculino')])
+    gender = SelectField('Sexo!', choices=[('Female', 'Femenino'), ('Male', 'Masculino')])
     occupation = SelectField('Ocupacao', choices=[
         ('Student', 'Estudante'), 
         ('Full-time employed', 'Empregado em tempo integral'),
@@ -157,7 +159,7 @@ class data_science_mental(FlaskForm):
         ('Unemployed', 'Desempregada'),
         ('Retired', 'Aposentada'),
         ])
-    region = SelectField('regiao', choices=[
+    region = SelectField('Regiao!', choices=[
         ('Latin America', 'America Latina'), 
         ('Oceania', 'Oceania'),
         ('Africa', 'Africa'),
@@ -165,7 +167,7 @@ class data_science_mental(FlaskForm):
         ('Asia', 'Asia'),
         ('North America', 'Norte Americana'),
         ])
-    most_used_platform = SelectField('Plataforma mais ultilizada', choices=[
+    most_used_platform = SelectField('Plataforma mais ultilizada!', choices=[
         ('TikTok', 'TikTok'), 
         ('Instagram', 'Instagram'),
         ('YouTube', 'YouTube'),
@@ -175,7 +177,7 @@ class data_science_mental(FlaskForm):
         ('Snapchat', 'Snapchat'),
         ('Reddit', 'Reddit'),
         ])
-    platforms_used_count = SelectField('Contagem de plataformas utilizadas', choices=[
+    platforms_used_count = SelectField('Quantos horas na plataformas utilizadas!', choices=[
         (1, 1), 
         (2, 2),
         (3, 3),
@@ -185,5 +187,23 @@ class data_science_mental(FlaskForm):
         (7, 7),
         (8, 8),
         ])
+    daily_screen_hours = FloatField("Informe a sua valor quanto horas voces passa em um plataforma:",validators=[DataRequired(message="Informe o valor."),NumberRange(min=0, message="O valor nao pode ser negativo."),],)
+    daily_notifications = IntegerField("Informe a sua quantas notificavao voce recebe por dia:",validators=[DataRequired(message="Informe o valor."),NumberRange(min=0, message="O valor nao pode ser negativo."),],)
+    night_time_use = SelectField('Qual e frequncia horas por noite:', choices=[
+            ('Never', 'Nunca'), 
+            ('Often', 'Frequentemente'),
+            ('Every night', 'todos as noite'),
+            ('Sometimes', 'As vezes'),
+            ])
+    minutes_to_first_check_after_waking = IntegerField("Minutos ate a primeira verificacao apos acordar:",validators=[DataRequired(message="Informe o valor."),NumberRange(min=0, message="O valor nao pode ser negativo."),],)
+    primary_purpose = SelectField('Plataforma objetivo principal!', choices=[
+            ('Entertainment', 'Entretenimento'), 
+            ('News/information', 'Noticias/informacoes'),
+            ('Work/career', 'Trabalho/carreira'),
+            ('Connection with friends', 'Conectar com amigos'),
+            ('Passing time/boredom', 'Passar o tempo/tedio'),
+            ('Content creation', 'Criacao de conteudo'),
+            ])
+    avg_sleep_hours = FloatField("Informe media de horas de sono:",validators=[DataRequired(message="Informe o valor."),NumberRange(min=0, message="O valor nao pode ser negativo."),],)  
     
     submit = SubmitField('Submit')
