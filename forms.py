@@ -157,5 +157,33 @@ class data_science_mental(FlaskForm):
         ('Unemployed', 'Desempregada'),
         ('Retired', 'Aposentada'),
         ])
+    region = SelectField('regiao', choices=[
+        ('Latin America', 'America Latina'), 
+        ('Oceania', 'Oceania'),
+        ('Africa', 'Africa'),
+        ('Europe', 'Europa'),
+        ('Asia', 'Asia'),
+        ('North America', 'Norte Americana'),
+        ])
+    most_used_platform = SelectField('Plataforma mais ultilizada', choices=[
+        ('TikTok', 'TikTok'), 
+        ('Instagram', 'Instagram'),
+        ('YouTube', 'YouTube'),
+        ('LinkedIn', 'LinkedIn'),
+        ('X/Twitter', 'X/Twitter'),
+        ('Facebook', 'Facebook'),
+        ('Snapchat', 'Snapchat'),
+        ('Reddit', 'Reddit'),
+        ])
+    platforms_used_count = SelectField('Contagem de plataformas utilizadas', choices=[
+        (1, 1), 
+        (2, 2),
+        (3, 3),
+        (4, 4),
+        (5, 5),
+        (6, 6),
+        (7, 7),
+        (8, 8),
+        ])
     
     submit = SubmitField('Submit')
