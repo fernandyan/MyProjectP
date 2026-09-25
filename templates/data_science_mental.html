@@ -108,6 +108,83 @@
                         <span class="form-error">{{ error }}</span>
                         {% endfor %}
                     </div>
+                    <div class="form-group">
+                        {{ form.anxiety_score_0to27.label(class="form-label") }}
+                        {{ form.anxiety_score_0to27(class="form-input") }}
+                        {% for error in form.anxiety_score_0to27.errors %}
+                        <span class="form-error">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.low_mood_score_0to27.label(class="form-label") }}
+                        {{ form.low_mood_score_0to27(class="form-input") }}
+                        {% for error in form.low_mood_score_0to27.errors %}
+                        <span class="form-error">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.life_satisfaction_1to10.label(class="form-label") }}
+                        {{ form.life_satisfaction_1to10(class="form-input") }}
+                        {% for error in form.life_satisfaction_1to10.errors %}
+                        <span class="form-error">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.loneliness_1to10.label(class="form-label") }}
+                        {{ form.loneliness_1to10(class="form-input") }}
+                        {% for error in form.loneliness_1to10.errors %}
+                        <span class="form-error">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.self_esteem_1to10.label(class="form-label") }}
+                        {{ form.self_esteem_1to10(class="form-input") }}
+                        {% for error in form.self_esteem_1to10.errors %}
+                        <span class="form-error">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.fomo_1to10.label(class="form-label") }}
+                        {{ form.fomo_1to10(class="form-input") }}
+                        {% for error in form.fomo_1to10.errors %}
+                        <span class="form-error">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.social_comparison_1to10.label(class="form-label") }}
+                        {{ form.social_comparison_1to10(class="form-input") }}
+                        {% for error in form.social_comparison_1to10.errors %}
+                        <span class="form-error">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.physical_activity_days_per_week.label(class="form-label") }}
+                        {{ form.physical_activity_days_per_week(class="form-input") }}
+                        {% for error in form.physical_activity_days_per_week.errors %}
+                        <span class="form-error">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.uses_screen_time_limits.label(class="form-label") }}
+                        {{ form.uses_screen_time_limits(class="form-input") }}
+                        {% for error in form.uses_screen_time_limits.errors %}
+                        <span class="form-error">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.attempted_digital_detox.label(class="form-label") }}
+                        {{ form.attempted_digital_detox(class="form-input") }}
+                        {% for error in form.attempted_digital_detox.errors %}
+                        <span class="form-error">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.seeks_mental_health_support.label(class="form-label") }}
+                        {{ form.seeks_mental_health_support(class="form-input") }}
+                        {% for error in form.seeks_mental_health_support.errors %}
+                        <span class="form-error">{{ error }}</span>
+                        {% endfor %}
+                    </div>
                 </div>
                 {{ form.submit(class="btn btn-primary") }}
             </form>

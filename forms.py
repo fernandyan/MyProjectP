@@ -205,5 +205,28 @@ class data_science_mental(FlaskForm):
             ('Content creation', 'Criacao de conteudo'),
             ])
     avg_sleep_hours = FloatField("Informe media de horas de sono:",validators=[DataRequired(message="Informe o valor."),NumberRange(min=0, message="O valor nao pode ser negativo."),],)  
+    anxiety_score_0to27 = IntegerField("Digite o numero de assiedade de 0 a 27 :",validators=[DataRequired(message="Informe o valor."),NumberRange(min=0, message="O valor nao pode ser negativo."),],)
+    low_mood_score_0to27 = IntegerField("Digite um escala de mal humor 0 a 27 :",validators=[DataRequired(message="Informe o valor."),NumberRange(min=0, message="O valor nao pode ser negativo."),],)
+    life_satisfaction_1to10 = IntegerField("Digite um escala de vida satifeita 1 a 10 :",validators=[DataRequired(message="Informe o valor."),NumberRange(min=0, message="O valor nao pode ser negativo."),],)
+    loneliness_1to10 = IntegerField("Digite um escala de solidao 1 a 10 :",validators=[DataRequired(message="Informe o valor."),NumberRange(min=0, message="O valor nao pode ser negativo."),],)
+    self_esteem_1to10 = IntegerField("Digite um escala de autoestima 1 a 10 :",validators=[DataRequired(message="Informe o valor."),NumberRange(min=0, message="O valor nao pode ser negativo."),],)
+    fomo_1to10 = IntegerField("Digite um escala de medo nao socilizacao 1 a 10 :",validators=[DataRequired(message="Informe o valor."),NumberRange(min=0, message="O valor nao pode ser negativo."),],)
+    social_comparison_1to10 = IntegerField("Digite um escala de comparacao social 1 a 10 :",validators=[DataRequired(message="Informe o valor."),NumberRange(min=0, message="O valor nao pode ser negativo."),],)
+    physical_activity_days_per_week = IntegerField("atividade social por semana 0 a 7 :",validators=[DataRequired(message="Informe o valor."),NumberRange(min=0, message="O valor nao pode ser negativo."),],)
+    physical_activity_days_per_week = IntegerField("atividade social por semana 0 a 7 :",validators=[DataRequired(message="Informe o valor."),NumberRange(min=0, message="O valor nao pode ser negativo."),],)
+    uses_screen_time_limits = SelectField('Voce tem um limeite de tempo de uso de rede social?:', choices=[
+            ('No', 'Nao'), 
+            ('Yes', 'Sim'),
+            ])
+    attempted_digital_detox = SelectField('Voce ja buscou com ajuda psicologica?:', choices=[
+                ('No', 'Nao'), 
+                ('Yes, failed', 'Sim, com frcasso!'),
+                ('Yes, succeeded', 'Sim, com sucesso!'), 
+                ])
+    seeks_mental_health_support = SelectField('Voce ja buscou com ajuda psicologica?:', choices=[
+            ('No', 'Nao'), 
+            ('Yes', 'Sim'),
+            ('Considering it', 'Considerado isso'), 
+            ])
     
     submit = SubmitField('Submit')
