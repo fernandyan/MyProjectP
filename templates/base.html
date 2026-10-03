@@ -7,13 +7,12 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <script>
         (function () {
-            var theme = localStorage.getItem('theme') || 'dark';
+            var theme = 'dark';
+            try {
+                theme = localStorage.getItem('theme') || 'dark';
+            } catch (e) { /* localStorage indisponível */ }
             document.documentElement.dataset.theme = theme;
-            if (theme === 'dark') {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
+            document.documentElement.classList.toggle('dark', theme === 'dark');
         })();
     </script>
 </head>
@@ -75,26 +74,41 @@
 
             function apply(theme) {
                 document.documentElement.dataset.theme = theme;
-                if (theme === 'dark') {
-                    document.documentElement.classList.add('dark');
-                } else {
-                    document.documentElement.classList.remove('dark');
-                }
+                document.documentElement.classList.toggle('dark', theme === 'dark');
+                window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: theme } }));
                 if (toggle) {
                     toggle.textContent = icons[theme] || '🌙';
-                    toggle.setAttribute('aria-label', theme === 'dark' ? 'Mudar para tema claro' : 'Mudar para tema escuro');
+                    toggle.title = theme === 'dark' ? 'Ativar modo claro' : 'Ativar modo escuro';
+                    toggle.setAttribute('aria-label', toggle.title);
+                    toggle.setAttribute('aria-pressed', theme === 'light' ? 'true' : 'false');
                 }
             }
 
-            apply(localStorage.getItem('theme') || 'dark');
+            function getTheme() {
+                try {
+                    return localStorage.getItem('theme') || 'dark';
+                } catch (e) {
+                    return document.documentElement.dataset.theme || 'dark';
+                }
+            }
+
+            apply(getTheme());
 
             if (toggle) {
                 toggle.addEventListener('click', function () {
-                    var current = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-                    localStorage.setItem('theme', current);
-                    apply(current);
+                    var next = getTheme() === 'dark' ? 'light' : 'dark';
+                    try {
+                        localStorage.setItem('theme', next);
+                    } catch (e) { /* localStorage indisponível */ }
+                    apply(next);
                 });
             }
+
+            window.addEventListener('storage', function (event) {
+                if (event.key === 'theme') {
+                    apply(getTheme());
+                }
+            });
         })();
     </script>
 </body>

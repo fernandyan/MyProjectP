@@ -5,72 +5,61 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
     tailwind.config = {
-        darkMode: 'class',
-        theme: {
-            extend: {
-                colors: {
-                    darkBg: '#0f172a',
-                    darkSurface: '#1e293b',
-                    darkBorder: '#334155',
-                    accent: '#38bdf8',
-                    accentHover: '#0ea5e9'
-                }
-            }
-        }
+        darkMode: 'class'
     }
 </script>
 
-<div class="min-h-screen bg-slate-950 text-slate-100 py-12 px-4 sm:px-6 lg:px-8">
+<div class="min-h-screen theme-page py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-5xl mx-auto space-y-10">
 
         <!-- Header / Intro -->
         <div class="text-center space-y-3">
-            <span class="inline-block px-3.5 py-1 text-xs font-semibold tracking-wider text-sky-400 bg-sky-950/60 border border-sky-800/50 rounded-full uppercase">
+            <span class="inline-block px-3.5 py-1 text-xs font-semibold tracking-wider text-sky-700 dark:text-sky-400 bg-sky-50 dark:bg-sky-950/60 border border-sky-200 dark:border-sky-800/50 rounded-full uppercase">
                 Machine Learning &amp; Saúde Mental
             </span>
-            <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+            <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
                 Análise de Impacto Digital
             </h1>
-            <p class="max-w-2xl mx-auto text-base text-slate-400">
+            <p class="max-w-2xl mx-auto text-base text-slate-600 dark:text-slate-400">
                 Preencha o questionário abaixo com seus hábitos digitais e bem-estar para gerar previsões e análises em tempo real.
             </p>
         </div>
 
         <!-- Form Card -->
-        <div class="bg-slate-900/90 border border-slate-800 rounded-2xl shadow-2xl p-6 sm:p-10 backdrop-blur-sm">
+        <div class="bg-white/90 border border-slate-200 dark:bg-slate-900/90 dark:border-slate-800 rounded-2xl shadow-2xl p-6 sm:p-10 backdrop-blur-sm">
             <form method="post" class="space-y-8">
                 {{ form.hidden_tag() }}
 
                 <!-- Section 1: Demografia e Perfil -->
                 <div>
-                    <h3 class="text-lg font-semibold text-sky-400 border-b border-slate-800 pb-2 mb-4 flex items-center gap-2">
+                    <h3 class="text-lg font-semibold text-sky-700 dark:text-sky-400 border-b border-slate-200 dark:border-slate-800 pb-2 mb-4 flex items-center gap-2">
                         <span>👤</span> 1. Dados Demográficos
                     </h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                         <div class="space-y-1.5">
                             {{ form.age.label(class="block text-sm font-medium text-slate-300") }}
-                            {{ form.age(class="w-full bg-slate-800/80 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition") }}
+                            {{ form.age(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.age.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
                             {% endfor %}
                         </div>
                         <div class="space-y-1.5">
                             {{ form.gender.label(class="block text-sm font-medium text-slate-300") }}
-                            {{ form.gender(class="w-full bg-slate-800/80 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition") }}
+                            {{ form.gender(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.gender.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
                             {% endfor %}
                         </div>
                         <div class="space-y-1.5">
                             {{ form.occupation.label(class="block text-sm font-medium text-slate-300") }}
-                            {{ form.occupation(class="w-full bg-slate-800/80 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition") }}
+                            {{ form.occupation(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.occupation.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
                             {% endfor %}
                         </div>
                         <div class="space-y-1.5">
                             {{ form.region.label(class="block text-sm font-medium text-slate-300") }}
-                            {{ form.region(class="w-full bg-slate-800/80 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition") }}
+                            {{ form.region(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.region.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
                             {% endfor %}
@@ -80,55 +69,55 @@
 
                 <!-- Section 2: Uso de Dispositivos e Redes Sociais -->
                 <div>
-                    <h3 class="text-lg font-semibold text-sky-400 border-b border-slate-800 pb-2 mb-4 flex items-center gap-2">
+                    <h3 class="text-lg font-semibold text-sky-700 dark:text-sky-400 border-b border-slate-200 dark:border-slate-800 pb-2 mb-4 flex items-center gap-2">
                         <span>📱</span> 2. Hábitos Digitais e Redes
                     </h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                         <div class="space-y-1.5">
                             {{ form.most_used_platform.label(class="block text-sm font-medium text-slate-300") }}
-                            {{ form.most_used_platform(class="w-full bg-slate-800/80 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition") }}
+                            {{ form.most_used_platform(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.most_used_platform.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
                             {% endfor %}
                         </div>
                         <div class="space-y-1.5">
                             {{ form.platforms_used_count.label(class="block text-sm font-medium text-slate-300") }}
-                            {{ form.platforms_used_count(class="w-full bg-slate-800/80 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition") }}
+                            {{ form.platforms_used_count(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.platforms_used_count.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
                             {% endfor %}
                         </div>
                         <div class="space-y-1.5">
                             {{ form.daily_screen_hours.label(class="block text-sm font-medium text-slate-300") }}
-                            {{ form.daily_screen_hours(class="w-full bg-slate-800/80 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition") }}
+                            {{ form.daily_screen_hours(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.daily_screen_hours.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
                             {% endfor %}
                         </div>
                         <div class="space-y-1.5">
                             {{ form.daily_notifications.label(class="block text-sm font-medium text-slate-300") }}
-                            {{ form.daily_notifications(class="w-full bg-slate-800/80 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition") }}
+                            {{ form.daily_notifications(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.daily_notifications.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
                             {% endfor %}
                         </div>
                         <div class="space-y-1.5">
                             {{ form.night_time_use.label(class="block text-sm font-medium text-slate-300") }}
-                            {{ form.night_time_use(class="w-full bg-slate-800/80 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition") }}
+                            {{ form.night_time_use(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.night_time_use.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
                             {% endfor %}
                         </div>
                         <div class="space-y-1.5">
                             {{ form.minutes_to_first_check_after_waking.label(class="block text-sm font-medium text-slate-300") }}
-                            {{ form.minutes_to_first_check_after_waking(class="w-full bg-slate-800/80 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition") }}
+                            {{ form.minutes_to_first_check_after_waking(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.minutes_to_first_check_after_waking.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
                             {% endfor %}
                         </div>
                         <div class="space-y-1.5 sm:col-span-2 lg:col-span-3">
                             {{ form.primary_purpose.label(class="block text-sm font-medium text-slate-300") }}
-                            {{ form.primary_purpose(class="w-full bg-slate-800/80 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition") }}
+                            {{ form.primary_purpose(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.primary_purpose.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
                             {% endfor %}
@@ -138,62 +127,62 @@
 
                 <!-- Section 3: Saúde Mental e Bem-Estar -->
                 <div>
-                    <h3 class="text-lg font-semibold text-sky-400 border-b border-slate-800 pb-2 mb-4 flex items-center gap-2">
+                    <h3 class="text-lg font-semibold text-sky-700 dark:text-sky-400 border-b border-slate-200 dark:border-slate-800 pb-2 mb-4 flex items-center gap-2">
                         <span>🧠</span> 3. Indicadores de Saúde Mental e Sono
                     </h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                         <div class="space-y-1.5">
                             {{ form.avg_sleep_hours.label(class="block text-sm font-medium text-slate-300") }}
-                            {{ form.avg_sleep_hours(class="w-full bg-slate-800/80 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition") }}
+                            {{ form.avg_sleep_hours(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.avg_sleep_hours.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
                             {% endfor %}
                         </div>
                         <div class="space-y-1.5">
                             {{ form.anxiety_score_0to27.label(class="block text-sm font-medium text-slate-300") }}
-                            {{ form.anxiety_score_0to27(class="w-full bg-slate-800/80 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition") }}
+                            {{ form.anxiety_score_0to27(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.anxiety_score_0to27.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
                             {% endfor %}
                         </div>
                         <div class="space-y-1.5">
                             {{ form.low_mood_score_0to27.label(class="block text-sm font-medium text-slate-300") }}
-                            {{ form.low_mood_score_0to27(class="w-full bg-slate-800/80 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition") }}
+                            {{ form.low_mood_score_0to27(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.low_mood_score_0to27.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
                             {% endfor %}
                         </div>
                         <div class="space-y-1.5">
                             {{ form.life_satisfaction_1to10.label(class="block text-sm font-medium text-slate-300") }}
-                            {{ form.life_satisfaction_1to10(class="w-full bg-slate-800/80 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition") }}
+                            {{ form.life_satisfaction_1to10(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.life_satisfaction_1to10.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
                             {% endfor %}
                         </div>
                         <div class="space-y-1.5">
                             {{ form.loneliness_1to10.label(class="block text-sm font-medium text-slate-300") }}
-                            {{ form.loneliness_1to10(class="w-full bg-slate-800/80 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition") }}
+                            {{ form.loneliness_1to10(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.loneliness_1to10.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
                             {% endfor %}
                         </div>
                         <div class="space-y-1.5">
                             {{ form.self_esteem_1to10.label(class="block text-sm font-medium text-slate-300") }}
-                            {{ form.self_esteem_1to10(class="w-full bg-slate-800/80 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition") }}
+                            {{ form.self_esteem_1to10(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.self_esteem_1to10.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
                             {% endfor %}
                         </div>
                         <div class="space-y-1.5">
                             {{ form.fomo_1to10.label(class="block text-sm font-medium text-slate-300") }}
-                            {{ form.fomo_1to10(class="w-full bg-slate-800/80 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition") }}
+                            {{ form.fomo_1to10(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.fomo_1to10.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
                             {% endfor %}
                         </div>
                         <div class="space-y-1.5 sm:col-span-2">
                             {{ form.social_comparison_1to10.label(class="block text-sm font-medium text-slate-300") }}
-                            {{ form.social_comparison_1to10(class="w-full bg-slate-800/80 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition") }}
+                            {{ form.social_comparison_1to10(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.social_comparison_1to10.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
                             {% endfor %}
@@ -203,34 +192,34 @@
 
                 <!-- Section 4: Hábitos e Intervenções -->
                 <div>
-                    <h3 class="text-lg font-semibold text-sky-400 border-b border-slate-800 pb-2 mb-4 flex items-center gap-2">
+                    <h3 class="text-lg font-semibold text-sky-700 dark:text-sky-400 border-b border-slate-200 dark:border-slate-800 pb-2 mb-4 flex items-center gap-2">
                         <span>🛡️</span> 4. Atividades e Intervenções
                     </h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                         <div class="space-y-1.5">
                             {{ form.physical_activity_days_per_week.label(class="block text-sm font-medium text-slate-300") }}
-                            {{ form.physical_activity_days_per_week(class="w-full bg-slate-800/80 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition") }}
+                            {{ form.physical_activity_days_per_week(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.physical_activity_days_per_week.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
                             {% endfor %}
                         </div>
                         <div class="space-y-1.5">
                             {{ form.uses_screen_time_limits.label(class="block text-sm font-medium text-slate-300") }}
-                            {{ form.uses_screen_time_limits(class="w-full bg-slate-800/80 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition") }}
+                            {{ form.uses_screen_time_limits(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.uses_screen_time_limits.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
                             {% endfor %}
                         </div>
                         <div class="space-y-1.5">
                             {{ form.attempted_digital_detox.label(class="block text-sm font-medium text-slate-300") }}
-                            {{ form.attempted_digital_detox(class="w-full bg-slate-800/80 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition") }}
+                            {{ form.attempted_digital_detox(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.attempted_digital_detox.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
                             {% endfor %}
                         </div>
                         <div class="space-y-1.5">
                             {{ form.seeks_mental_health_support.label(class="block text-sm font-medium text-slate-300") }}
-                            {{ form.seeks_mental_health_support(class="w-full bg-slate-800/80 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition") }}
+                            {{ form.seeks_mental_health_support(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.seeks_mental_health_support.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
                             {% endfor %}
@@ -239,20 +228,20 @@
                 </div>
 
                 <!-- Submit Button -->
-                <div class="pt-6 border-t border-slate-800 flex justify-end">
+                <div class="pt-6 border-t border-slate-200 dark:border-slate-800 flex justify-end">
                     {{ form.submit(class="w-full sm:w-auto px-8 py-3 bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold rounded-xl shadow-lg shadow-sky-500/20 transition duration-200 cursor-pointer") }}
                 </div>
             </form>
         </div>
 
         <!-- Chart Section -->
-        <div class="bg-slate-900/90 border border-slate-800 rounded-2xl shadow-2xl p-6 sm:p-10 backdrop-blur-sm space-y-6">
-            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 border-b border-slate-800 pb-4">
+        <div class="bg-white/90 border border-slate-200 dark:bg-slate-900/90 dark:border-slate-800 rounded-2xl shadow-2xl p-6 sm:p-10 backdrop-blur-sm space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 border-b border-slate-200 dark:border-slate-800 pb-4">
                 <div>
-                    <h3 class="text-xl font-bold text-white">Visualização de Dados</h3>
-                    <p class="text-sm text-slate-400">Gráfico interativo baseado nas métricas processadas.</p>
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white">Visualização de Dados</h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-400">Gráfico interativo baseado nas métricas processadas.</p>
                 </div>
-                <span class="text-xs font-medium text-emerald-400 bg-emerald-950/60 border border-emerald-800/50 px-3 py-1 rounded-full self-start sm:self-auto">
+                <span class="text-xs font-medium text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800/50 px-3 py-1 rounded-full self-start sm:self-auto">
                     ● Pronto para Análise
                 </span>
             </div>
@@ -265,15 +254,15 @@
 </div>
 
 <!-- Contact Section -->
-<section id="contato" class="py-16 bg-slate-900 border-t border-slate-800">
+<section id="contato" class="py-16 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
-        <h2 class="text-2xl font-bold text-white">Contato</h2>
-        <p class="text-slate-400">Vamos conversar? Envie uma mensagem ou encontre-me pelos canais abaixo.</p>
+        <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Contato</h2>
+        <p class="text-slate-600 dark:text-slate-400">Vamos conversar? Envie uma mensagem ou encontre-me pelos canais abaixo.</p>
         <div class="flex flex-wrap gap-4 pt-2">
             <a href="{{ url_for('main.contato') }}" class="px-5 py-2.5 bg-sky-500 hover:bg-sky-400 text-slate-950 font-semibold rounded-lg shadow transition">Enviar mensagem</a>
-            <a href="mailto:{{ contato.email }}" class="px-5 py-2.5 border border-slate-700 hover:border-sky-500 hover:text-sky-400 text-slate-200 font-semibold rounded-lg transition">Email</a>
-            <a href="{{ contato.github }}" class="px-5 py-2.5 border border-slate-700 hover:border-sky-500 hover:text-sky-400 text-slate-200 font-semibold rounded-lg transition" target="_blank" rel="noopener">GitHub</a>
-            <a href="{{ contato.linkedin }}" class="px-5 py-2.5 border border-slate-700 hover:border-sky-500 hover:text-sky-400 text-slate-200 font-semibold rounded-lg transition" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="mailto:{{ contato.email }}" class="px-5 py-2.5 border border-slate-300 hover:border-sky-500 hover:text-sky-600 text-slate-700 font-semibold rounded-lg transition dark:border-slate-700 dark:hover:text-sky-400 dark:text-slate-200">Email</a>
+            <a href="{{ contato.github }}" class="px-5 py-2.5 border border-slate-300 hover:border-sky-500 hover:text-sky-600 text-slate-700 font-semibold rounded-lg transition dark:border-slate-700 dark:hover:text-sky-400 dark:text-slate-200" target="_blank" rel="noopener">GitHub</a>
+            <a href="{{ contato.linkedin }}" class="px-5 py-2.5 border border-slate-300 hover:border-sky-500 hover:text-sky-600 text-slate-700 font-semibold rounded-lg transition dark:border-slate-700 dark:hover:text-sky-400 dark:text-slate-200" target="_blank" rel="noopener">LinkedIn</a>
         </div>
     </div>
 </section>
@@ -281,52 +270,73 @@
 <!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    const ctx = document.getElementById('myChart');
-
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-            datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: 'rgba(56, 189, 248, 0.5)',
-                borderColor: '#38bdf8',
-                borderWidth: 1,
-                borderRadius: 6
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    labels: {
-                        color: '#cbd5e1'
-                    }
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    grid: {
-                        color: 'rgba(51, 65, 85, 0.4)'
-                    },
-                    ticks: {
-                        color: '#94a3b8'
-                    }
-                },
-                x: {
-                    grid: {
-                        display: false
-                    },
-                    ticks: {
-                        color: '#94a3b8'
-                    }
-                }
-            }
+    (function () {
+        function paleta() {
+            var escuro = document.documentElement.dataset.theme !== 'light';
+            return {
+                legenda: escuro ? '#cbd5e1' : '#334155',
+                eixo: escuro ? '#94a3b8' : '#64748b',
+                grade: escuro ? 'rgba(51, 65, 85, 0.4)' : 'rgba(100, 116, 139, 0.25)',
+                barra: escuro ? 'rgba(56, 189, 248, 0.5)' : 'rgba(2, 132, 199, 0.55)',
+                borda: escuro ? '#38bdf8' : '#0284c7'
+            };
         }
-    });
+
+        var grafico = null;
+        var temaDesenhado = null;
+
+        function desenhar() {
+            var ctx = document.getElementById('myChart');
+            if (!ctx) return;
+            temaDesenhado = document.documentElement.dataset.theme;
+            var p = paleta();
+            if (grafico) grafico.destroy();
+            grafico = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                    datasets: [{
+                        label: '# of Votes',
+                        data: [12, 19, 3, 5, 2, 3],
+                        backgroundColor: p.barra,
+                        borderColor: p.borda,
+                        borderWidth: 1,
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: p.legenda
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: p.grade },
+                            ticks: { color: p.eixo }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: p.eixo }
+                        }
+                    }
+                }
+            });
+        }
+
+        desenhar();
+
+        window.addEventListener('themechange', function () {
+            if (document.documentElement.dataset.theme !== temaDesenhado) {
+                desenhar();
+            }
+        });
+    })();
 </script>
 
 {% endblock %}

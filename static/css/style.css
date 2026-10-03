@@ -1,4 +1,6 @@
 :root {
+    color-scheme: dark;
+
     --bg: #0f172a;
     --bg-alt: #111c33;
     --surface: #1e293b;
@@ -7,11 +9,25 @@
     --muted: #94a3b8;
     --accent: #38bdf8;
     --accent-hover: #0ea5e9;
+    --on-accent: #0b1120;
     --navbar-bg: rgba(15, 23, 42, 0.85);
     --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+
+    --ok: #4ade80;
+    --ok-bg: rgba(34, 197, 94, 0.12);
+    --ok-border: rgba(34, 197, 94, 0.5);
+    --danger: #f87171;
+    --danger-bg: rgba(239, 68, 68, 0.12);
+    --danger-border: rgba(239, 68, 68, 0.5);
+
+    --page-bg: #090d16;
+    --page-fg: #e2e8f0;
+    --page-fade: #0f172a;
 }
 
 :root[data-theme="light"] {
+    color-scheme: light;
+
     --bg: #f1f5f9;
     --bg-alt: #e2e8f0;
     --surface: #ffffff;
@@ -20,8 +36,40 @@
     --muted: #64748b;
     --accent: #0284c7;
     --accent-hover: #0369a1;
+    --on-accent: #ffffff;
     --navbar-bg: rgba(241, 245, 249, 0.85);
     --shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
+
+    --ok: #15803d;
+    --ok-bg: rgba(34, 197, 94, 0.14);
+    --ok-border: rgba(21, 128, 61, 0.4);
+    --danger: #b91c1c;
+    --danger-bg: rgba(239, 68, 68, 0.1);
+    --danger-border: rgba(185, 28, 28, 0.35);
+
+    --page-bg: #f8fafc;
+    --page-fg: #0f172a;
+    --page-fade: #e2e8f0;
+}
+
+/* Páginas com paleta própria (index / data science) seguem o tema atual */
+.theme-page {
+    min-height: 100vh;
+    background-color: var(--page-bg);
+    color: var(--page-fg);
+}
+
+.hero-glow {
+    background: radial-gradient(ellipse at top, rgba(99, 102, 241, 0.22), transparent 65%);
+}
+
+.cta-fade {
+    background: linear-gradient(to top, var(--page-fade), var(--page-bg));
+}
+
+/* Anel dos marcadores da timeline acompanha o fundo da página */
+.dot-ring {
+    border-color: var(--page-bg);
 }
 
 * {
@@ -32,6 +80,12 @@
 
 html {
     scroll-behavior: smooth;
+    /* seções não ficam escondidas atrás da navbar fixa ao clicar em âncoras */
+    scroll-padding-top: 90px;
+    overflow-y: scroll;
+    /* reserva a gutter da scrollbar: evita o layout (e a navbar) saltar
+       15px ao navegar entre páginas com e sem scrollbar */
+    scrollbar-gutter: stable;
 }
 
 body {
@@ -45,6 +99,14 @@ body {
     max-width: 1080px;
     margin: 0 auto;
     padding: 0 1.5rem;
+}
+
+/* O Tailwind CDN (index/data science) gera a utilidade .container com
+   max-width próprio (1280px em telas grandes) e "vence" este arquivo por
+   ordem de carregamento, deslocando a navbar ~100px entre páginas.
+   Especificidade maior garante a largura do site em todas as páginas. */
+body .container {
+    max-width: 1080px;
 }
 
 .navbar {
@@ -73,6 +135,9 @@ body {
 
 .nav-links {
     display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
     gap: 1.75rem;
     list-style: none;
 }
@@ -89,20 +154,23 @@ body {
 }
 
 .theme-toggle {
-    background: transparent;
+    background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: 999px;
     color: var(--text);
     font-size: 1.1rem;
     line-height: 1;
+    min-width: 2.5rem;
+    min-height: 2.5rem;
     padding: 0.35rem 0.6rem;
     cursor: pointer;
-    transition: border-color 0.2s, color 0.2s;
+    transition: border-color 0.2s, color 0.2s, transform 0.2s;
 }
 
 .theme-toggle:hover {
     border-color: var(--accent);
     color: var(--accent);
+    transform: scale(1.05);
 }
 
 .hero {
@@ -269,7 +337,7 @@ body {
 
 .btn-primary {
     background-color: var(--accent);
-    color: #0b1120;
+    color: var(--on-accent);
 }
 
 .btn-primary:hover {
@@ -317,15 +385,15 @@ body {
 }
 
 .flash-success {
-    background-color: rgba(34, 197, 94, 0.12);
-    border-color: rgba(34, 197, 94, 0.5);
-    color: #4ade80;
+    background-color: var(--ok-bg);
+    border-color: var(--ok-border);
+    color: var(--ok);
 }
 
 .flash-danger {
-    background-color: rgba(239, 68, 68, 0.12);
-    border-color: rgba(239, 68, 68, 0.5);
-    color: #f87171;
+    background-color: var(--danger-bg);
+    border-color: var(--danger-border);
+    color: var(--danger);
 }
 
 .flash-info {
@@ -374,7 +442,7 @@ textarea.form-input {
 .form-error {
     display: block;
     margin-top: 0.3rem;
-    color: #f87171;
+    color: var(--danger);
     font-size: 0.85rem;
 }
 
@@ -434,13 +502,13 @@ textarea.form-input {
 
 .btn-danger {
     background-color: transparent;
-    border: 1px solid rgba(239, 68, 68, 0.6);
-    color: #f87171;
+    border: 1px solid var(--danger-border);
+    color: var(--danger);
 }
 
 .btn-danger:hover {
-    background-color: rgba(239, 68, 68, 0.15);
-    border-color: #ef4444;
+    background-color: var(--danger-bg);
+    border-color: var(--danger);
 }
 
 .post-content {
