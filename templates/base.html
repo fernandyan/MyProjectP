@@ -9,6 +9,11 @@
         (function () {
             var theme = localStorage.getItem('theme') || 'dark';
             document.documentElement.dataset.theme = theme;
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
         })();
     </script>
 </head>
@@ -70,16 +75,26 @@
 
             function apply(theme) {
                 document.documentElement.dataset.theme = theme;
-                toggle.textContent = icons[theme];
+                if (theme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+                if (toggle) {
+                    toggle.textContent = icons[theme] || '🌙';
+                    toggle.setAttribute('aria-label', theme === 'dark' ? 'Mudar para tema claro' : 'Mudar para tema escuro');
+                }
             }
 
             apply(localStorage.getItem('theme') || 'dark');
 
-            toggle.addEventListener('click', function () {
-                var current = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-                localStorage.setItem('theme', current);
-                apply(current);
-            });
+            if (toggle) {
+                toggle.addEventListener('click', function () {
+                    var current = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+                    localStorage.setItem('theme', current);
+                    apply(current);
+                });
+            }
         })();
     </script>
 </body>
