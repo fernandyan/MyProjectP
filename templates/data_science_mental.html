@@ -1,13 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<!-- Tailwind CSS CDN -->
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-    tailwind.config = {
-        darkMode: 'class'
-    }
-</script>
+
 
 <div class="min-h-screen theme-page py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-5xl mx-auto space-y-10">
@@ -37,28 +31,28 @@
                     </h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                         <div class="space-y-1.5">
-                            {{ form.age.label(class="block text-sm font-medium text-slate-300") }}
+                            {{ form.age.label(class="block text-sm font-medium text-slate-500 dark:text-slate-300") }}
                             {{ form.age(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.age.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
                             {% endfor %}
                         </div>
                         <div class="space-y-1.5">
-                            {{ form.gender.label(class="block text-sm font-medium text-slate-300") }}
+                            {{ form.gender.label(class="block text-sm font-medium text-slate-500 dark:text-slate-300") }}
                             {{ form.gender(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.gender.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
                             {% endfor %}
                         </div>
                         <div class="space-y-1.5">
-                            {{ form.occupation.label(class="block text-sm font-medium text-slate-300") }}
+                            {{ form.occupation.label(class="block text-sm font-medium text-slate-500 dark:text-slate-300") }}
                             {{ form.occupation(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.occupation.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
                             {% endfor %}
                         </div>
                         <div class="space-y-1.5">
-                            {{ form.region.label(class="block text-sm font-medium text-slate-300") }}
+                            {{ form.region.label(class="block text-sm font-medium text-slate-500 dark:text-slate-300") }}
                             {{ form.region(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.region.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
@@ -74,49 +68,49 @@
                     </h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                         <div class="space-y-1.5">
-                            {{ form.most_used_platform.label(class="block text-sm font-medium text-slate-300") }}
+                            {{ form.most_used_platform.label(class="block text-sm font-medium text-slate-500 dark:text-slate-300") }}
                             {{ form.most_used_platform(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.most_used_platform.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
                             {% endfor %}
                         </div>
                         <div class="space-y-1.5">
-                            {{ form.platforms_used_count.label(class="block text-sm font-medium text-slate-300") }}
+                            {{ form.platforms_used_count.label(class="block text-sm font-medium text-slate-500 dark:text-slate-300") }}
                             {{ form.platforms_used_count(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.platforms_used_count.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
                             {% endfor %}
                         </div>
                         <div class="space-y-1.5">
-                            {{ form.daily_screen_hours.label(class="block text-sm font-medium text-slate-300") }}
+                            {{ form.daily_screen_hours.label(class="block text-sm font-medium text-slate-500 dark:text-slate-300") }}
                             {{ form.daily_screen_hours(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.daily_screen_hours.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
                             {% endfor %}
                         </div>
                         <div class="space-y-1.5">
-                            {{ form.daily_notifications.label(class="block text-sm font-medium text-slate-300") }}
+                            {{ form.daily_notifications.label(class="block text-sm font-medium text-slate-500 dark:text-slate-300") }}
                             {{ form.daily_notifications(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.daily_notifications.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
                             {% endfor %}
                         </div>
                         <div class="space-y-1.5">
-                            {{ form.night_time_use.label(class="block text-sm font-medium text-slate-300") }}
+                            {{ form.night_time_use.label(class="block text-sm font-medium text-slate-500 dark:text-slate-300") }}
                             {{ form.night_time_use(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.night_time_use.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
                             {% endfor %}
                         </div>
                         <div class="space-y-1.5">
-                            {{ form.minutes_to_first_check_after_waking.label(class="block text-sm font-medium text-slate-300") }}
+                            {{ form.minutes_to_first_check_after_waking.label(class="block text-sm font-medium text-slate-500 dark:text-slate-300") }}
                             {{ form.minutes_to_first_check_after_waking(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.minutes_to_first_check_after_waking.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
                             {% endfor %}
                         </div>
                         <div class="space-y-1.5 sm:col-span-2 lg:col-span-3">
-                            {{ form.primary_purpose.label(class="block text-sm font-medium text-slate-300") }}
+                            {{ form.primary_purpose.label(class="block text-sm font-medium text-slate-500 dark:text-slate-300") }}
                             {{ form.primary_purpose(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.primary_purpose.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
@@ -132,56 +126,56 @@
                     </h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                         <div class="space-y-1.5">
-                            {{ form.avg_sleep_hours.label(class="block text-sm font-medium text-slate-300") }}
+                            {{ form.avg_sleep_hours.label(class="block text-sm font-medium") }}
                             {{ form.avg_sleep_hours(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.avg_sleep_hours.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
                             {% endfor %}
                         </div>
                         <div class="space-y-1.5">
-                            {{ form.anxiety_score_0to27.label(class="block text-sm font-medium text-slate-300") }}
+                            {{ form.anxiety_score_0to27.label(class="block text-sm font-medium") }}
                             {{ form.anxiety_score_0to27(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.anxiety_score_0to27.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
                             {% endfor %}
                         </div>
                         <div class="space-y-1.5">
-                            {{ form.low_mood_score_0to27.label(class="block text-sm font-medium text-slate-300") }}
+                            {{ form.low_mood_score_0to27.label(class="block text-sm font-medium") }}
                             {{ form.low_mood_score_0to27(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.low_mood_score_0to27.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
                             {% endfor %}
                         </div>
                         <div class="space-y-1.5">
-                            {{ form.life_satisfaction_1to10.label(class="block text-sm font-medium text-slate-300") }}
+                            {{ form.life_satisfaction_1to10.label(class="block text-sm font-medium") }}
                             {{ form.life_satisfaction_1to10(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.life_satisfaction_1to10.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
                             {% endfor %}
                         </div>
                         <div class="space-y-1.5">
-                            {{ form.loneliness_1to10.label(class="block text-sm font-medium text-slate-300") }}
+                            {{ form.loneliness_1to10.label(class="block text-sm font-medium") }}
                             {{ form.loneliness_1to10(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.loneliness_1to10.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
                             {% endfor %}
                         </div>
                         <div class="space-y-1.5">
-                            {{ form.self_esteem_1to10.label(class="block text-sm font-medium text-slate-300") }}
+                            {{ form.self_esteem_1to10.label(class="block text-sm font-medium") }}
                             {{ form.self_esteem_1to10(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.self_esteem_1to10.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
                             {% endfor %}
                         </div>
                         <div class="space-y-1.5">
-                            {{ form.fomo_1to10.label(class="block text-sm font-medium text-slate-300") }}
+                            {{ form.fomo_1to10.label(class="block text-sm font-medium") }}
                             {{ form.fomo_1to10(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.fomo_1to10.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
                             {% endfor %}
                         </div>
                         <div class="space-y-1.5 sm:col-span-2">
-                            {{ form.social_comparison_1to10.label(class="block text-sm font-medium text-slate-300") }}
+                            {{ form.social_comparison_1to10.label(class="block text-sm font-medium") }}
                             {{ form.social_comparison_1to10(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.social_comparison_1to10.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
@@ -197,28 +191,28 @@
                     </h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                         <div class="space-y-1.5">
-                            {{ form.physical_activity_days_per_week.label(class="block text-sm font-medium text-slate-300") }}
+                            {{ form.physical_activity_days_per_week.label(class="block text-sm font-medium") }}
                             {{ form.physical_activity_days_per_week(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.physical_activity_days_per_week.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
                             {% endfor %}
                         </div>
                         <div class="space-y-1.5">
-                            {{ form.uses_screen_time_limits.label(class="block text-sm font-medium text-slate-300") }}
+                            {{ form.uses_screen_time_limits.label(class="block text-sm font-medium") }}
                             {{ form.uses_screen_time_limits(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.uses_screen_time_limits.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
                             {% endfor %}
                         </div>
                         <div class="space-y-1.5">
-                            {{ form.attempted_digital_detox.label(class="block text-sm font-medium text-slate-300") }}
+                            {{ form.attempted_digital_detox.label(class="block text-sm font-medium") }}
                             {{ form.attempted_digital_detox(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.attempted_digital_detox.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
                             {% endfor %}
                         </div>
                         <div class="space-y-1.5">
-                            {{ form.seeks_mental_health_support.label(class="block text-sm font-medium text-slate-300") }}
+                            {{ form.seeks_mental_health_support.label(class="block text-sm font-medium") }}
                             {{ form.seeks_mental_health_support(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100") }}
                             {% for error in form.seeks_mental_health_support.errors %}
                             <span class="text-xs text-red-400 block">{{ error }}</span>
