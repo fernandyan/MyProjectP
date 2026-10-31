@@ -69,6 +69,13 @@ def contato():
     return render_template("contato.html", form=form, contato=contato_info)
 
 
+# my make its
+@main_bp.route("/data", methods=["GET", "POST"])
+def data():
+    form = ContatoForm()
+    return render_template("data.html")
+
+# my make its 2
 @main_bp.route("/data_science_mental", methods=["GET", "POST"])
 def data_science_metal():
     
