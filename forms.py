@@ -328,3 +328,9 @@ class data_science_mental(FlaskForm):
             ])
     
     submit = SubmitField('Submit')
+
+class DepressionForm(FlaskForm):
+    gender = SelectField('Sexo!', choices=[('Female', 'Femenino'), ('Male', 'Masculino')])
+    age = IntegerField("Informe a sua idade por favor!",validators=[DataRequired(message="Informe o idade."),NumberRange(min=0, message="O idade nao pode ser negativo."),],)
+
+    submit = SubmitField('Submit')

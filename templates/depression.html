@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="min-h-screen theme-page py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-5xl mx-auto space-y-10">
+
+        <!-- Header / Intro -->
+        <div class="text-center space-y-3">
+            <span
+                class="inline-block px-3.5 py-1 text-xs font-semibold tracking-wider text-sky-700 dark:text-sky-400 bg-sky-50 dark:bg-sky-950/60 border border-sky-200 dark:border-sky-800/50 rounded-full uppercase">
+                Machine Learning &amp; Saúde Mental
+            </span>
+            <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+                Análise de Impacto Digital
+            </h1>
+            <p class="max-w-2xl mx-auto text-base text-slate-600 dark:text-slate-400">
+                Preencha o questionário abaixo com seus hábitos digitais e bem-estar para gerar previsões e análises em
+                tempo real.
+            </p>
+        </div>
+
+        <!-- Form Card -->
+        <div
+            class="bg-white/90 border border-slate-200 dark:bg-slate-900/90 dark:border-slate-800 rounded-2xl shadow-2xl p-6 sm:p-10 backdrop-blur-sm">
+            <form method="post" class="space-y-8">
+                {{ form.hidden_tag() }}
+
+                <!-- Section 1: Demografia e Perfil -->
+                <div>
+                    <h3
+                        class="text-lg font-semibold text-sky-700 dark:text-sky-400 border-b border-slate-200 dark:border-slate-800 pb-2 mb-4 flex items-center gap-2">
+                        <span>👤</span> 1. Dados Demográficos
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                        <div class="space-y-1.5">
+                            {{ form.age.label(class="block text-sm font-medium text-slate-500 dark:text-slate-300") }}
+                            {{ form.age(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2
+                            text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500
+                            focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700
+                            dark:text-slate-100") }}
+                            {% for error in form.age.errors %}
+                            <span class="text-xs text-red-400 block">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="space-y-1.5">
+                            {{ form.gender.label(class="block text-sm font-medium text-slate-500 dark:text-slate-300")
+                            }}
+                            {{ form.gender(class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2
+                            text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500
+                            focus:border-transparent transition dark:bg-slate-800/80 dark:border-slate-700
+                            dark:text-slate-100") }}
+                            {% for error in form.gender.errors %}
+                            <span class="text-xs text-red-400 block">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="pt-6 border-t border-slate-200 dark:border-slate-800 flex justify-end">
+                    {{ form.submit(class="w-full sm:w-auto px-8 py-3 bg-sky-500 hover:bg-sky-400 text-slate-950
+                    font-bold rounded-xl shadow-lg shadow-sky-500/20 transition duration-200 cursor-pointer") }}
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<!-- Contact Section -->
+<section id="contato" class="py-16 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
+        <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Contato</h2>
+        <p class="text-slate-600 dark:text-slate-400">Vamos conversar? Envie uma mensagem ou encontre-me pelos canais
+            abaixo.</p>
+        <div class="flex flex-wrap gap-4 pt-2">
+            <a href="{{ url_for('main.contato') }}"
+                class="px-5 py-2.5 bg-sky-500 hover:bg-sky-400 text-slate-950 font-semibold rounded-lg shadow transition">Enviar
+                mensagem</a>
+            <a href="mailto:{{ contato.email }}"
+                class="px-5 py-2.5 border border-slate-300 hover:border-sky-500 hover:text-sky-600 text-slate-700 font-semibold rounded-lg transition dark:border-slate-700 dark:hover:text-sky-400 dark:text-slate-200">Email</a>
+            <a href="{{ contato.github }}"
+                class="px-5 py-2.5 border border-slate-300 hover:border-sky-500 hover:text-sky-600 text-slate-700 font-semibold rounded-lg transition dark:border-slate-700 dark:hover:text-sky-400 dark:text-slate-200"
+                target="_blank" rel="noopener">GitHub</a>
+            <a href="{{ contato.linkedin }}"
+                class="px-5 py-2.5 border border-slate-300 hover:border-sky-500 hover:text-sky-600 text-slate-700 font-semibold rounded-lg transition dark:border-slate-700 dark:hover:text-sky-400 dark:text-slate-200"
+                target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

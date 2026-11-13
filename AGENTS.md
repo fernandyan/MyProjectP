@@ -1,57 +1,69 @@
 # AGENTS.md
 
-Flask portfolio app (dark mode) with SQLAlchemy + Flask-WTF + Flask-Login, a Stripe Checkout store, and python-dotenv-driven config. Windows / PowerShell; Python lives in a repo-local `venv/`.
+Flask portfolio app (dark mode) with SQLAlchemy + Flask-WTF + Flask-Login, a Stripe Checkout store, a scikit-learn "mental health" predictor, and python-dotenv config. Windows / PowerShell; Python lives in the repo-local `venv/`.
 
 ## Commands
 
+Run from the repo root (the ML route loads `classificador.pkl` with a CWD-relative path).
+
 ```powershell
-# Install deps (after fresh clone) — fills venv from requirements.txt
+# Install deps
 .\venv\Scripts\pip install -r requirements.txt
 
-# Configure env first: Copy-Item .env.example .env, then set your STRIPE keys.
-# Seed DB first: creates tables, admin user, and sample data (incl. produtos)
-.\venv\Scripts\python seed.py
+# Env + DB (both required before first boot)
+Copy-Item .env.example .env   # then set STRIPE keys
+.\venv\Scripts\python seed.py # tables + admin user + sample data
 
-# Run dev server (debug=True)
+# Dev server (debug=True, http://127.0.0.1:5000)
 .\venv\Scripts\python app.py
 
-# Run tests (pytest; isolated in-memory DB, does NOT touch instance/portfolio.db)
-.\venv\Scripts\python -m pytest tests -v
+# Tests (in-memory DB via tests/conftest.py; does NOT touch instance/portfolio.db)
+.\venv\Scripts\python -m pytest tests -q
 
-# Focused: one file, or one test
+# Focused
 .\venv\Scripts\python -m pytest tests/test_loja.py -v
 .\venv\Scripts\python -m pytest "tests/test_blog_flow.py::test_usuario_exclui_proprio_post" -v
 ```
 
-No lint or formatter is configured. Tests live in `tests/` (pytest, isolated in-memory DB via `tests/conftest.py`) — run them with `.\venv\Scripts\python -m pytest tests -v`. POSTs need a `csrf_token` scraped from the form HTML because Flask-WTF CSRF is enabled (`tests/conftest.py` has `_csrf`/`csrf_para` helpers for that).
+No lint, formatter, typecheck, or CI is configured. Current suite: 26 tests.
 
-User-facing install/setup docs live in `README.md` — point users there instead of re-explaining setup.
+User-facing setup docs are in `README.md`; point users there instead of restating setup.
 
 ## Architecture
 
-- `app.py` — entrypoint. `load_dotenv()` then app config from `.env` (with dev fallbacks): `SECRET_KEY`, `SQLALCHEMY_DATABASE_URI`, `STRIPE_SECRET_KEY`, `STRIPE_PUBLISHABLE_KEY`, `BASE_URL`. Sets `stripe.api_key`. Extension init (`db`, `login_manager`), `user_loader`, the `inject_year` context processor, and blueprint registration. No routes live here.
-- `blueprints/main.py` — `main_bp`: public routes `/`, `/contato`. Holds the hardcoded `perfil`, `habilidades`, `contato_info` dicts (`contato_info` is passed to templates as `contato`). `perfil` is imported by `app.py` for the context processor.
-- `blueprints/auth.py` — `auth_bp`: `/registro`, `/login`, `/logout`. `login_manager.login_view` is `"auth.login"`.
-- `blueprints/blog.py` — `blog_bp` (url_prefix `/blog`): list, `/blog/<id>`, user blog CRUD (`/blog/novo`, `/blog/<id>/editar`, `/blog/<id>/excluir`, `@login_required` + `_pode_gerenciar_post()` ownership check).
-- `blueprints/loja.py` — `loja_bp`: `/loja` (product list from DB, only `disponivel=True`, passes `publishable_key` to the template), `POST /loja/checkout/<id>` (creates a Stripe Checkout Session with `mode="payment"` and `price_data.currency="usd"`, redirects 303 to `session.url`), `/loja/sucesso`, `/loja/cancelado`. No webhook — orders are not persisted. `success_url`/`cancel_url` built from `BASE_URL` config.
-- `blueprints/admin.py` — `admin_bp` (url_prefix `/admin`): dashboard + CRUD (`@admin_required`), plus `admin_required`, `CAMPOS_ITEM`, `_processar_item()`, `_excluir_item()`. Uses `author_id = current_user.id` (not `author = current_user`) to avoid SQLAlchemy session warning.
-- `models.py` — defines the shared `db` instance; models `User` (with `email`, `is_admin`), `Projeto`, `Experiencia`, `Educacao`, `Post` (with `author_id` FK to users), `Mensagem`, `Produto` (with `preco_centavos` in USD cents and `preco_usd` property, `disponivel` boolean). Uses `datetime.now(timezone.utc)` lambdas for timestamps (not deprecated `datetime.utcnow()`).
-- `forms.py` — WTForms form classes (one per model + login/registro/contato).
-- `seed.py` — `db.create_all()` + admin user (`admin` / `admin123`) + sample portfolio data (incl. sample products). Must run before first boot. Note: `app.py` also calls `db.create_all()` at startup, but that only creates empty/missing tables — no admin user, so you cannot log in without running `seed.py` once.
-- `templates/` — all pages extend `base.html`. Admin forms reuse the generic `admin/item_form.html`. `url_for()` in templates must use blueprint-prefixed endpoints (`main.index`, `auth.login`, `blog.blog_novo`, `loja.loja`, `admin.produto_editar`, …).
+- `app.py` — entrypoint. `load_dotenv()`, then config from `.env` with fallbacks: `SECRET_KEY`, `SQLALCHEMY_DATABASE_URI`, `STRIPE_SECRET_KEY`, `STRIPE_PUBLISHABLE_KEY`, `BASE_URL`. Sets `stripe.api_key`, inits `db` + `login_manager`, defines `user_loader`, registers blueprints. `db.create_all()` runs only inside `if __name__ == "__main__"` (so importing app does not create tables; `seed.py` calls it itself).
+- Context processor `inject_year` makes `current_year`, `perfil`, and `csrf_token` available to every template. `perfil` (and the hardcoded `habilidades` / `contato_info`) live in `blueprints/main.py`.
+- `blueprints/main.py` — `main_bp`: `/`, `/contato`, `/data` (hub page `data.html`), and `/data_science_mental` whose endpoint is `main.data_science_metal` (deliberate typo; `data.html` links to it via `url_for`).
+- `blueprints/auth.py` — `/registro`, `/login`, `/logout`; `login_manager.login_view = "auth.login"`.
+- `blueprints/blog.py` — `blog_bp` (`/blog`): list/detail + own-post CRUD; ownership via `_pode_gerenciar_post()` (admins can manage all).
+- `blueprints/loja.py` — `loja_bp`: `/loja`, `POST /loja/checkout/<id>` (Stripe Session `mode="payment"`, `currency="usd"`, 303 redirect), `/loja/sucesso`, `/loja/cancelado`. No webhook; orders are not persisted.
+- `blueprints/admin.py` — `admin_bp` (`/admin`): dashboard + CRUD behind `@admin_required`; DRY helpers `CAMPOS_ITEM`, `_processar_item()`, `_excluir_item()`.
+- `models.py` — shared `db`; `User`, `Projeto`, `Experiencia`, `Educacao`, `Post`, `Mensagem`, `Produto`.
+- `forms.py` — WTForms classes (one per model + login/registro/contato) plus the lowercase `data_science_mental` form.
+- `seed.py` — `db.create_all()` + admin (`admin` / `admin123`) + sample data. Without it there is no admin user.
+- `templates/` — all pages extend `base.html`; admin forms reuse `admin/item_form.html`. Always use blueprint-prefixed endpoints in `url_for`.
+
+## Data Science route
+
+- `forms.py::data_science_mental` has ~22 fields; their names must match the columns the pickled model expects. `main.data_science_metal` collects them into a one-row pandas DataFrame, loads `classificador.pkl` (committed at repo root) with `joblib.load`, and calls `.predict()`.
+- The prediction is currently only `print()`ed to the server console — it is not rendered or flashed to the user. Don't assume the page displays a result.
+- This route is not covered by the test suite.
+
+## Frontend / theming
+
+- Two styling systems coexist: `static/css/style.css` uses CSS variables toggled by `[data-theme]`, while `templates/index.html` and `templates/data*.html` use Tailwind CDN utilities (`dark:` variants) plus `.theme-page` for the page background.
+- `base.html` loads Tailwind with `darkMode: 'class'`; the theme toggle stores `theme` in `localStorage` (default `dark`) and sets both `data-theme` and the `.dark` class.
+- `style.css` needs `body .container { max-width: 1080px }` because Tailwind's `.container` loads later and otherwise changes the navbar width between pages. Keep it.
+- New Tailwind pages must supply both light and `dark:` classes; new CSS-variable pages should use the existing vars.
 
 ## Gotchas
 
-- DB is SQLite at `instance/portfolio.db` (URI `sqlite:///portfolio.db`). Schema is created via `db.create_all()` only — there are NO migrations. Adding/renaming a column requires deleting `instance/portfolio.db` and re-running `seed.py`.
-- `base.html` title/nav use `perfil.nome`. `perfil`, `habilidades`, `contato_info` are hardcoded in `blueprints/main.py`; only `perfil` is available to every template (via the `inject_year` context processor in `app.py`, which injects `current_year`, `perfil` AND `csrf_token`). `habilidades` and `contato` are passed explicitly by `main.index`/`main.contato`. Portfolio items (projetos/experiencias/educacao/mensagens) come from the DB.
-- Admin CRUD is DRY via `_processar_item()` / `_excluir_item()` in `blueprints/admin.py`. New fields must be added to the `CAMPOS_ITEM` list or they won't be persisted. New admin entities should follow this pattern. `_processar_item()` sets `author_id = current_user.id` on new `Post` rows (author_id is NOT nullable). Unlike blog delete (POST+CSRF), admin `*_excluir` routes are plain GET links (tests expect this).
-- `Projeto.tecnologias` is a comma-separated string; use the `tecnologias_lista` property in templates, not `split` inline.
-- `Post` requires `author_id` (FK to `users`). Regular logged-in users manage only their own posts (see `_pode_gerenciar_post()`); admins manage all. Blog delete is POST-only with CSRF.
-- `csrf_token()` is exposed to templates via the `inject_year` context processor — needed for plain (non-WTForms) POST forms like the blog delete button.
-- `SECRET_KEY` is a hardcoded dev value — do not use in production as-is.
-- `.gitignore` excludes `venv/`, `__pycache__/`, `instance/` (so `portfolio.db` is not committed) and `.env`; `.env.example` IS committed.
-- Config comes from `.env` (loaded via `load_dotenv()` in `app.py`) with dev fallbacks. Tests don't read `.env` — `tests/conftest.py` builds a fresh app with hardcoded config.
-- `Produto.preco_centavos` is an integer in USD cents (e.g. `2990` = US$ 29.90). Use the `preco_usd` property in templates, not division inline.
-- No webhook: orders are not persisted. `loja.checkout` catches `stripe.error.StripeError`; `success_url`/`cancel_url` come from the `BASE_URL` config. Local testing with Stripe test keys (`sk_test_...`) uses the card `4242 4242 4242 4242`.
-- Tests mock `stripe.checkout.Session.create` via monkeypatch — never call the real Stripe API in tests.
-- **ML deps**: `scikit-learn`, `pandas`, `joblib` are in requirements.txt but not yet used in the codebase.
+- DB is SQLite at `instance/portfolio.db`. Schema comes only from `db.create_all()` — there are no migrations. Changing a column requires deleting the DB and re-running `seed.py`.
+- Admin fields must be listed in `CAMPOS_ITEM` or they will not be persisted. `_processar_item()` repopulates the form from the DB after an invalid POST, overwriting submitted values — be aware if you touch validation/editing.
+- Admin `*_excluir` routes are plain GET links with no CSRF; blog delete is POST-only with CSRF (a GET to `/blog/<id>/excluir` must return 405).
+- `Post.author_id` is non-nullable; admin-created posts set `author_id = current_user.id` (not `author = current_user`).
+- `Projeto.tecnologias` is a comma-separated string — use the `tecnologias_lista` property. `Produto.preco_centavos` is USD cents — use the `preco_usd` property.
+- CSRF is enabled everywhere. Tests scrape tokens with `conftest._csrf` / `csrf_para(client, path)` and log in with `conftest.login`.
+- Tests build their own app in `tests/conftest.py` (hardcoded config, in-memory SQLite) and never import `app.py`, so `.env` is irrelevant to tests. Stripe is monkeypatched via `stripe.checkout.Session.create`; never call the real API in tests.
+- `.gitignore` excludes `venv/`, `instance/`, `.env`; `.env.example` and `classificador.pkl` are committed.
+- `SECRET_KEY` and Stripe keys come from `.env`; the app has insecure dev fallbacks, so don't ship them.

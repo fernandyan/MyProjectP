@@ -1,6 +1,6 @@
 from flask import Blueprint, flash, redirect, render_template, url_for
 
-from forms import ContatoForm, data_science_mental
+from forms import ContatoForm, data_science_mental, DepressionForm
 from models import Educacao, Experiencia, Mensagem, Projeto, db
 import joblib
 import pandas as pd
@@ -114,3 +114,33 @@ def data_science_metal():
             flash("Dados enviada com sucesso!", "success")
             return redirect(url_for("main.index"))
     return render_template("data_science_mental.html", form=form, contato=contato_info)
+
+
+# my make its 2
+@main_bp.route("/student_sepression", methods=["GET", "POST"])
+def student_sepression():
+    
+    form = DepressionForm()
+    if form.validate_on_submit():
+            # Carregando o modelo de volta
+            clf_carregado = joblib.load("student_depression01.pkl")
+            dados = {
+                'Gender': form.gender.data,
+                'Age': form.age.data,
+                'Family_background': 'Middle class',
+                'Relationship_status': 'Single',
+                'Marital_status': 'Unmarried',
+                'Living_style': 'Bachelor',
+                'Current_semester': 8,
+                'CGPA': 3.43,
+                'friend_circle': 'Yes',
+                'Health_condition': 'Critical',
+                'Cost_without_study': 10113,
+                'Home_division': 'Chittagong',
+                }
+            df = pd.DataFrame(dados,index=[0])
+            print(clf_carregado.predict(df))
+
+            flash("Dados enviada com sucesso 2222 !", "success")
+            return redirect(url_for("main.index"))
+    return render_template("depression.html", form=form, contato=contato_info)
