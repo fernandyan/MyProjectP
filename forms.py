@@ -332,5 +332,24 @@ class data_science_mental(FlaskForm):
 class DepressionForm(FlaskForm):
     gender = SelectField('Sexo!', choices=[('Female', 'Femenino'), ('Male', 'Masculino')])
     age = IntegerField("Informe a sua idade por favor!",validators=[DataRequired(message="Informe o idade."),NumberRange(min=0, message="O idade nao pode ser negativo."),],)
+    family_background = SelectField('Classe familiar!', choices=[('Middle class', 'Classe média'), ('Lower Middle class', 'Classe média baixa'), ('Rich class', 'Classe rica')])
+    relationship_status = SelectField('Relacionamento status!', choices=[('Single', 'Solteiro'), ('In a Relationship', 'Em uma relação'), ('Complicated', 'Complicada')])
+    marital_status = SelectField('Estado civil!', choices=[('Married', 'Casado'), ('Unmarried', 'Não casado'), ('Separated', 'Separado')])
+    living_style = SelectField('estilo de vida!', choices=[('Bachelor', 'Bacharel'), ('Family', 'Família')])
+    current_semester = IntegerField("semestre atual! ",validators=[DataRequired(message="Informe o valor."),NumberRange(min=0, message="O valor nao pode ser negativo."),],)
+    cgpa = FloatField("Média de notas ou outras pontuações acadêmicas:",validators=[DataRequired(message="Informe o valor."),NumberRange(min=0, message="O valor nao pode ser negativo."),],)
+    friend_circle = SelectField('Voce tem círculo de amizades!', choices=[('Yes', 'Sim!'), ('No', 'Nao!')])
+    health_condition = SelectField('Condição de saúde!', choices=[('Abnormal', 'Anormal'), ('Normal', 'Normal'), ('Good', 'Bom!'), ('Critical', 'Crítico!')])
+    cost_without_study = IntegerField("Custo sem estudo! ",validators=[DataRequired(message="Informe o valor."),NumberRange(min=0, message="O valor nao pode ser negativo."),],)
+    home_division = SelectField('divisão residencial!', choices=[
+        ('Dhaka', 'Dhaka'), 
+        ('Rangpur', 'Rangpur'),
+        ('Mymensingh', 'Mymensingh'),
+        ('Sylhet', 'Sylhet'),
+        ('Chittagong', 'Chittagong'),
+        ('Barisal', 'Barisal'),
+        ('Khulna', 'Khulna'),
+        ('Rajshahi', 'Rajshahi'),
+        ])
 
     submit = SubmitField('Submit')

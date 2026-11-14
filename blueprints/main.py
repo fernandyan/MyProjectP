@@ -117,8 +117,8 @@ def data_science_metal():
 
 
 # my make its 2
-@main_bp.route("/student_sepression", methods=["GET", "POST"])
-def student_sepression():
+@main_bp.route("/student_depression", methods=["GET", "POST"])
+def student_depression():
     
     form = DepressionForm()
     if form.validate_on_submit():
