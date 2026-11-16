@@ -1,0 +1,384 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="min-h-screen theme-page py-12 px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-5xl space-y-12">
+
+        <!-- Hero -->
+        <section
+            class="relative overflow-hidden rounded-2xl border border-slate-200 bg-white/90 p-8 text-center shadow-2xl backdrop-blur-sm dark:border-slate-800 dark:bg-slate-900/90 sm:p-12">
+            <div class="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-sky-400/20 blur-3xl"
+                aria-hidden="true"></div>
+            <div class="pointer-events-none absolute -bottom-24 -left-16 h-56 w-56 rounded-full bg-violet-400/15 blur-3xl"
+                aria-hidden="true"></div>
+
+            <div class="relative mx-auto max-w-3xl space-y-5">
+                <span
+                    class="inline-block rounded-full border border-sky-200 bg-sky-50 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-sky-700 dark:border-sky-800/50 dark:bg-sky-950/60 dark:text-sky-400">
+                    Machine Learning &amp; Saúde Mental
+                </span>
+
+                <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-5xl">
+                    Data Science
+                    <span
+                        class="bg-gradient-to-r from-sky-500 to-violet-500 bg-clip-text text-transparent dark:from-sky-400 dark:to-violet-400">
+                        &amp; IA
+                    </span>
+                </h1>
+
+                <p class="mx-auto max-w-2xl text-base leading-relaxed text-slate-600 dark:text-slate-400 sm:text-lg">
+                    Dois modelos de machine learning para explorar, de forma educativa, como hábitos digitais e a
+                    rotina acadêmica se relacionam com o bem-estar.
+                </p>
+
+                <dl class="mx-auto grid max-w-2xl grid-cols-1 gap-3 pt-2 sm:grid-cols-3">
+                    <div
+                        class="rounded-xl border border-slate-200 bg-white/70 px-4 py-3 dark:border-slate-800 dark:bg-slate-950/40">
+                        <dt class="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                            Modelos</dt>
+                        <dd class="mt-0.5 text-base font-bold text-slate-900 dark:text-white">2 preditivos</dd>
+                    </div>
+                    <div
+                        class="rounded-xl border border-slate-200 bg-white/70 px-4 py-3 dark:border-slate-800 dark:bg-slate-950/40">
+                        <dt class="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                            Indicadores</dt>
+                        <dd class="mt-0.5 text-base font-bold text-slate-900 dark:text-white">35 no total</dd>
+                    </div>
+                    <div
+                        class="rounded-xl border border-slate-200 bg-white/70 px-4 py-3 dark:border-slate-800 dark:bg-slate-950/40">
+                        <dt class="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                            Tecnologia</dt>
+                        <dd class="mt-0.5 text-base font-bold text-slate-900 dark:text-white">scikit-learn</dd>
+                    </div>
+                </dl>
+            </div>
+        </section>
+
+        <!-- Modelos -->
+        <section aria-labelledby="analises-title" class="space-y-6">
+            <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+                <div class="max-w-2xl space-y-1">
+                    <span class="font-mono text-xs uppercase tracking-widest text-sky-600 dark:text-sky-400">
+                        Modelos disponíveis
+                    </span>
+                    <h2 id="analises-title" class="text-2xl font-extrabold text-slate-900 dark:text-white sm:text-3xl">
+                        Escolha uma análise
+                    </h2>
+                    <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                        Cada questionário é independente e leva poucos minutos. Ao final, você recebe a classificação,
+                        a confiança do modelo e um resumo das suas respostas.
+                    </p>
+                </div>
+                <span
+                    class="inline-flex items-center gap-2 self-start rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700 dark:border-emerald-800/50 dark:bg-emerald-950/60 dark:text-emerald-400 sm:self-auto">
+                    <span class="h-2 w-2 rounded-full bg-emerald-500" aria-hidden="true"></span>
+                    Pronto para uso
+                </span>
+            </div>
+
+            <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+
+                <!-- Impacto digital -->
+                <a href="{{ url_for('main.data_science_metal') }}"
+                    class="group flex h-full flex-col rounded-2xl border border-slate-200 bg-white/90 p-6 shadow-xl transition duration-300 hover:-translate-y-1 hover:border-sky-500/60 hover:shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-slate-800 dark:bg-slate-900/90 dark:hover:border-sky-500/60 dark:focus-visible:ring-offset-slate-950 sm:p-8">
+                    <div class="flex items-start justify-between gap-4">
+                        <span
+                            class="inline-flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-500/15 to-cyan-500/10 text-sky-600 ring-1 ring-sky-500/20 dark:text-sky-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.8" stroke="currentColor" class="h-7 w-7" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M10.5 1.5H8.25A2.25 2.25 0 0 0 6 3.75v16.5a2.25 2.25 0 0 0 2.25 2.25h7.5A2.25 2.25 0 0 0 18 20.25V3.75a2.25 2.25 0 0 0-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
+                            </svg>
+                        </span>
+                        <span
+                            class="rounded-full border border-sky-200 bg-sky-50 px-2.5 py-1 text-xs font-semibold text-sky-700 dark:border-sky-800/50 dark:bg-sky-950/60 dark:text-sky-400">
+                            23 indicadores
+                        </span>
+                    </div>
+
+                    <div class="mt-6 flex-1 space-y-3">
+                        <p class="font-mono text-xs uppercase tracking-widest text-sky-600 dark:text-sky-400">
+                            Hábitos digitais
+                        </p>
+                        <h3
+                            class="text-xl font-bold text-slate-900 transition group-hover:text-sky-600 dark:text-white dark:group-hover:text-sky-400">
+                            Análise de Impacto Digital
+                        </h3>
+                        <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                            Relaciona tempo de tela, redes sociais, sono e indicadores emocionais para estimar o impacto
+                            do uso digital no bem-estar.
+                        </p>
+                        <ul class="space-y-2 pt-1">
+                            <li class="flex gap-2 text-sm text-slate-600 dark:text-slate-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="2" stroke="currentColor"
+                                    class="mt-0.5 h-4 w-4 flex-shrink-0 text-sky-500 dark:text-sky-400"
+                                    aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="m4.5 12.75 6 6 9-13.5" />
+                                </svg>
+                                <span>Uso de redes, notificações e tempo de tela</span>
+                            </li>
+                            <li class="flex gap-2 text-sm text-slate-600 dark:text-slate-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="2" stroke="currentColor"
+                                    class="mt-0.5 h-4 w-4 flex-shrink-0 text-sky-500 dark:text-sky-400"
+                                    aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="m4.5 12.75 6 6 9-13.5" />
+                                </svg>
+                                <span>Sono, ansiedade, solidão e satisfação com a vida</span>
+                            </li>
+                            <li class="flex gap-2 text-sm text-slate-600 dark:text-slate-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="2" stroke="currentColor"
+                                    class="mt-0.5 h-4 w-4 flex-shrink-0 text-sky-500 dark:text-sky-400"
+                                    aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="m4.5 12.75 6 6 9-13.5" />
+                                </svg>
+                                <span>Classificação em três níveis de risco</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <span
+                        class="mt-6 inline-flex items-center gap-1.5 border-t border-slate-200 pt-5 text-sm font-bold text-sky-600 dark:border-slate-800 dark:text-sky-400">
+                        Iniciar análise
+                        <span aria-hidden="true"
+                            class="transition-transform duration-200 group-hover:translate-x-1">&rarr;</span>
+                    </span>
+                </a>
+
+                <!-- Bem-estar do estudante -->
+                <a href="{{ url_for('main.student_depression') }}"
+                    class="group flex h-full flex-col rounded-2xl border border-slate-200 bg-white/90 p-6 shadow-xl transition duration-300 hover:-translate-y-1 hover:border-violet-500/60 hover:shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-slate-800 dark:bg-slate-900/90 dark:hover:border-violet-500/60 dark:focus-visible:ring-offset-slate-950 sm:p-8">
+                    <div class="flex items-start justify-between gap-4">
+                        <span
+                            class="inline-flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-500/15 to-fuchsia-500/10 text-violet-600 ring-1 ring-violet-500/20 dark:text-violet-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.8" stroke="currentColor" class="h-7 w-7" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
+                            </svg>
+                        </span>
+                        <span
+                            class="rounded-full border border-violet-200 bg-violet-50 px-2.5 py-1 text-xs font-semibold text-violet-700 dark:border-violet-800/50 dark:bg-violet-950/60 dark:text-violet-400">
+                            12 indicadores
+                        </span>
+                    </div>
+
+                    <div class="mt-6 flex-1 space-y-3">
+                        <p class="font-mono text-xs uppercase tracking-widest text-violet-600 dark:text-violet-400">
+                            Rotina acadêmica
+                        </p>
+                        <h3
+                            class="text-xl font-bold text-slate-900 transition group-hover:text-violet-600 dark:text-white dark:group-hover:text-violet-400">
+                            Bem-estar do Estudante
+                        </h3>
+                        <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                            Considera rotina de estudos, relações, saúde e ambiente para identificar sinais associados à
+                            depressão em estudantes.
+                        </p>
+                        <ul class="space-y-2 pt-1">
+                            <li class="flex gap-2 text-sm text-slate-600 dark:text-slate-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="2" stroke="currentColor"
+                                    class="mt-0.5 h-4 w-4 flex-shrink-0 text-violet-500 dark:text-violet-400"
+                                    aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="m4.5 12.75 6 6 9-13.5" />
+                                </svg>
+                                <span>Semestre, desempenho acadêmico e rotina de estudos</span>
+                            </li>
+                            <li class="flex gap-2 text-sm text-slate-600 dark:text-slate-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="2" stroke="currentColor"
+                                    class="mt-0.5 h-4 w-4 flex-shrink-0 text-violet-500 dark:text-violet-400"
+                                    aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="m4.5 12.75 6 6 9-13.5" />
+                                </svg>
+                                <span>Círculo de amizades, saúde e condições de moradia</span>
+                            </li>
+                            <li class="flex gap-2 text-sm text-slate-600 dark:text-slate-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="2" stroke="currentColor"
+                                    class="mt-0.5 h-4 w-4 flex-shrink-0 text-violet-500 dark:text-violet-400"
+                                    aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="m4.5 12.75 6 6 9-13.5" />
+                                </svg>
+                                <span>Indicação de sinais e orientação de apoio</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <span
+                        class="mt-6 inline-flex items-center gap-1.5 border-t border-slate-200 pt-5 text-sm font-bold text-violet-600 dark:border-slate-800 dark:text-violet-400">
+                        Responder questionário
+                        <span aria-hidden="true"
+                            class="transition-transform duration-200 group-hover:translate-x-1">&rarr;</span>
+                    </span>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- Como funciona -->
+        <section aria-labelledby="como-funciona-title"
+            class="rounded-2xl border border-slate-200 bg-white/90 p-6 shadow-xl backdrop-blur-sm dark:border-slate-800 dark:bg-slate-900/90 sm:p-10">
+            <div class="max-w-2xl space-y-2">
+                <span class="font-mono text-xs uppercase tracking-widest text-sky-600 dark:text-sky-400">
+                    Passo a passo
+                </span>
+                <h2 id="como-funciona-title"
+                    class="text-2xl font-extrabold text-slate-900 dark:text-white sm:text-3xl">
+                    Como funciona
+                </h2>
+                <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                    O fluxo é simples e o resultado aparece na hora, sem cadastro.
+                </p>
+            </div>
+
+            <ol class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
+                <li
+                    class="rounded-xl border border-slate-200 bg-slate-50/60 p-5 dark:border-slate-800 dark:bg-slate-950/40">
+                    <div class="flex items-center gap-3">
+                        <span
+                            class="inline-flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-sky-50 text-sky-600 ring-1 ring-sky-500/20 dark:bg-sky-950/60 dark:text-sky-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.8" stroke="currentColor" class="h-5 w-5" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                            </svg>
+                        </span>
+                        <div>
+                            <span class="font-mono text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                                Passo 01
+                            </span>
+                            <h3 class="text-base font-semibold text-slate-900 dark:text-white">Preencha o questionário
+                            </h3>
+                        </div>
+                    </div>
+                    <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                        Responda às perguntas sobre hábitos, rotina e bem-estar com base no seu momento atual.
+                    </p>
+                </li>
+
+                <li
+                    class="rounded-xl border border-slate-200 bg-slate-50/60 p-5 dark:border-slate-800 dark:bg-slate-950/40">
+                    <div class="flex items-center gap-3">
+                        <span
+                            class="inline-flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-sky-50 text-sky-600 ring-1 ring-sky-500/20 dark:bg-sky-950/60 dark:text-sky-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.8" stroke="currentColor" class="h-5 w-5" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 0 0 2.25-2.25V6.75a2.25 2.25 0 0 0-2.25-2.25H6.75A2.25 2.25 0 0 0 4.5 6.75v10.5a2.25 2.25 0 0 0 2.25 2.25Zm.75-12h9v9h-9v-9Z" />
+                            </svg>
+                        </span>
+                        <div>
+                            <span class="font-mono text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                                Passo 02
+                            </span>
+                            <h3 class="text-base font-semibold text-slate-900 dark:text-white">O modelo processa</h3>
+                        </div>
+                    </div>
+                    <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                        As respostas são transformadas em dados e avaliadas pelo modelo de machine learning.
+                    </p>
+                </li>
+
+                <li
+                    class="rounded-xl border border-slate-200 bg-slate-50/60 p-5 dark:border-slate-800 dark:bg-slate-950/40">
+                    <div class="flex items-center gap-3">
+                        <span
+                            class="inline-flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-sky-50 text-sky-600 ring-1 ring-sky-500/20 dark:bg-sky-950/60 dark:text-sky-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.8" stroke="currentColor" class="h-5 w-5" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" />
+                            </svg>
+                        </span>
+                        <div>
+                            <span class="font-mono text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                                Passo 03
+                            </span>
+                            <h3 class="text-base font-semibold text-slate-900 dark:text-white">Receba o resumo</h3>
+                        </div>
+                    </div>
+                    <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                        Veja a classificação, a confiança do modelo, a distribuição estimada e suas respostas.
+                    </p>
+                </li>
+            </ol>
+
+            <div
+                class="mt-6 flex items-start gap-3 rounded-xl border border-slate-200 bg-slate-50/60 p-4 dark:border-slate-800 dark:bg-slate-950/40">
+                <span
+                    class="inline-flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600 ring-1 ring-emerald-500/20 dark:bg-emerald-950/50 dark:text-emerald-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
+                        stroke="currentColor" class="h-5 w-5" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+                    </svg>
+                </span>
+                <p class="text-xs leading-relaxed text-slate-600 dark:text-slate-400">
+                    <strong class="font-semibold text-slate-700 dark:text-slate-200">Privacidade:</strong>
+                    suas respostas são processadas em memória para gerar o resultado e não são salvas no banco de dados.
+                </p>
+            </div>
+        </section>
+
+        <!-- Aviso -->
+        <section
+            class="rounded-2xl border border-amber-200 bg-amber-50/90 p-6 dark:border-amber-900/60 dark:bg-amber-950/30 sm:p-8">
+            <div class="flex flex-col gap-4 sm:flex-row sm:items-start">
+                <span
+                    class="inline-flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-amber-100 text-amber-600 ring-1 ring-amber-500/20 dark:bg-amber-950/60 dark:text-amber-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
+                        stroke="currentColor" class="h-6 w-6" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
+                    </svg>
+                </span>
+                <div class="space-y-2">
+                    <h2 class="text-lg font-bold text-amber-900 dark:text-amber-200">
+                        Uma estimativa, não um diagnóstico
+                    </h2>
+                    <p class="text-sm leading-relaxed text-amber-800/90 dark:text-amber-200/80">
+                        Os resultados são gerados por modelos de machine learning com finalidade educativa. Eles não
+                        substituem uma avaliação profissional de saúde. Se você estiver passando por um momento difícil,
+                        procure apoio.
+                    </p>
+                    <div class="flex flex-wrap gap-3 pt-1">
+                        <a href="tel:188"
+                            class="rounded-lg bg-amber-500 px-4 py-2 text-sm font-semibold text-slate-950 shadow transition hover:bg-amber-400">
+                            Ligar 188 (CVV)
+                        </a>
+                        <a href="https://www.cvv.org.br/" target="_blank" rel="noopener"
+                            class="rounded-lg border border-amber-300 px-4 py-2 text-sm font-semibold text-amber-800 transition hover:border-amber-500 hover:text-amber-900 dark:border-amber-800 dark:text-amber-200 dark:hover:border-amber-500">
+                            Acessar cvv.org.br
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA final -->
+        <div class="flex flex-col gap-3 sm:flex-row sm:justify-center">
+            <a href="{{ url_for('main.data_science_metal') }}"
+                class="rounded-xl bg-sky-500 px-6 py-3 text-center font-bold text-slate-950 shadow-lg shadow-sky-500/20 transition hover:bg-sky-400">
+                Iniciar análise digital
+            </a>
+            <a href="{{ url_for('main.index') }}"
+                class="rounded-xl border border-slate-300 px-6 py-3 text-center font-semibold text-slate-700 transition hover:border-sky-500 hover:text-sky-600 dark:border-slate-700 dark:text-slate-200 dark:hover:border-sky-400 dark:hover:text-sky-400">
+                Voltar ao início
+            </a>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

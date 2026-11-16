@@ -1,0 +1,113 @@
+{# Componentes compartilhados pelas páginas de resultado de Data Science. #}
+
+{% macro icone_status(tom='sky') %}
+{%- if tom == 'rose' -%}
+    {%- set classes = 'bg-rose-50 text-rose-600 border-rose-200 dark:bg-rose-950/50 dark:text-rose-400 dark:border-rose-900/60' -%}
+{%- elif tom == 'amber' -%}
+    {%- set classes = 'bg-amber-50 text-amber-600 border-amber-200 dark:bg-amber-950/50 dark:text-amber-400 dark:border-amber-900/60' -%}
+{%- else -%}
+    {%- set classes = 'bg-emerald-50 text-emerald-600 border-emerald-200 dark:bg-emerald-950/50 dark:text-emerald-400 dark:border-emerald-900/60' -%}
+{%- endif -%}
+<span class="inline-flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-2xl border {{ classes }}" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="h-7 w-7">
+        {%- if tom == 'rose' -%}
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z" />
+        {%- elif tom == 'amber' -%}
+        <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+        {%- else -%}
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+        {%- endif -%}
+    </svg>
+</span>
+{% endmacro %}
+
+
+{% macro barra_confianca(pct, tom='sky') %}
+{%- set cores = {
+    'rose': 'bg-rose-500',
+    'amber': 'bg-amber-500',
+    'emerald': 'bg-emerald-500',
+    'sky': 'bg-sky-500'
+} -%}
+<div class="space-y-1.5">
+    <div class="flex items-center justify-between text-xs font-medium text-slate-500 dark:text-slate-400">
+        <span>Confiança do modelo</span>
+        <span class="font-bold text-slate-700 dark:text-slate-200">{{ pct }}%</span>
+    </div>
+    <div class="h-2.5 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800"
+        role="img" aria-label="Confiança do modelo: {{ pct }}%">
+        <div class="h-full rounded-full {{ cores.get(tom, cores['sky']) }}" style="width: {{ pct }}%"></div>
+    </div>
+</div>
+{% endmacro %}
+
+
+{% macro distribuicao(itens, tom='sky') %}
+{%- if itens -%}
+{%- set cores = {
+    'rose': 'bg-rose-500',
+    'amber': 'bg-amber-500',
+    'emerald': 'bg-emerald-500',
+    'sky': 'bg-sky-500'
+} -%}
+{%- set tons = {
+    'At-risk': 'bg-rose-500',
+    'Moderate': 'bg-amber-500',
+    'Good': 'bg-emerald-500',
+    'Yes': 'bg-rose-500',
+    'No': 'bg-emerald-500'
+} -%}
+<div class="space-y-3">
+    <p class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+        Distribuição estimada
+    </p>
+    {% for item in itens %}
+    <div class="space-y-1">
+        <div class="flex items-center justify-between text-sm">
+            <span class="font-medium text-slate-700 dark:text-slate-200">{{ item.label }}</span>
+            <span class="text-slate-500 dark:text-slate-400">{{ item.pct }}%</span>
+        </div>
+        <div class="h-1.5 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">
+            <div class="h-full rounded-full {{ tons.get(item.label, cores.get(tom, cores['sky'])) }}"
+                style="width: {{ item.pct }}%"></div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{%- endif -%}
+{% endmacro %}
+
+
+{% macro resumo_grid(itens) %}
+{%- if itens -%}
+<dl class="grid grid-cols-1 gap-x-6 gap-y-3 sm:grid-cols-2">
+    {% for item in itens %}
+    <div class="flex items-baseline justify-between gap-3 border-b border-slate-100 pb-2 dark:border-slate-800">
+        <dt class="text-sm text-slate-500 dark:text-slate-400">{{ item.rotulo }}</dt>
+        <dd class="text-right text-sm font-semibold text-slate-800 dark:text-slate-100">{{ item.valor }}</dd>
+    </div>
+    {% endfor %}
+</dl>
+{%- endif -%}
+{% endmacro %}
+
+
+{% macro detalhes_respostas(itens) %}
+{%- if itens -%}
+<details class="group rounded-xl border border-slate-200 bg-slate-50/60 dark:border-slate-800 dark:bg-slate-950/40">
+    <summary
+        class="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 text-sm font-semibold text-slate-700 dark:text-slate-200">
+        Ver todas as respostas
+        <span class="text-slate-400 transition group-open:rotate-180" aria-hidden="true">⌄</span>
+    </summary>
+    <dl class="grid grid-cols-1 gap-x-6 gap-y-2 px-4 pb-4 sm:grid-cols-2">
+        {% for item in itens %}
+        <div class="flex items-baseline justify-between gap-3">
+            <dt class="text-sm text-slate-500 dark:text-slate-400">{{ item.rotulo }}</dt>
+            <dd class="text-right text-sm font-medium text-slate-700 dark:text-slate-200">{{ item.valor }}</dd>
+        </div>
+        {% endfor %}
+    </dl>
+</details>
+{%- endif -%}
+{% endmacro %}

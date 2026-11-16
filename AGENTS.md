@@ -25,7 +25,7 @@ Copy-Item .env.example .env   # then set STRIPE keys
 .\venv\Scripts\python -m pytest "tests/test_blog_flow.py::test_usuario_exclui_proprio_post" -v
 ```
 
-No lint, formatter, typecheck, or CI is configured. Current suite: 26 tests.
+No lint, formatter, typecheck, or CI is configured. Current suite: 29 tests.
 
 User-facing setup docs are in `README.md`; point users there instead of restating setup.
 
@@ -33,7 +33,7 @@ User-facing setup docs are in `README.md`; point users there instead of restatin
 
 - `app.py` — entrypoint. `load_dotenv()`, then config from `.env` with fallbacks: `SECRET_KEY`, `SQLALCHEMY_DATABASE_URI`, `STRIPE_SECRET_KEY`, `STRIPE_PUBLISHABLE_KEY`, `BASE_URL`. Sets `stripe.api_key`, inits `db` + `login_manager`, defines `user_loader`, registers blueprints. `db.create_all()` runs only inside `if __name__ == "__main__"` (so importing app does not create tables; `seed.py` calls it itself).
 - Context processor `inject_year` makes `current_year`, `perfil`, and `csrf_token` available to every template. `perfil` (and the hardcoded `habilidades` / `contato_info`) live in `blueprints/main.py`.
-- `blueprints/main.py` — `main_bp`: `/`, `/contato`, `/data` (hub page `data.html`), and `/data_science_mental` whose endpoint is `main.data_science_metal` (deliberate typo; `data.html` links to it via `url_for`).
+- `blueprints/main.py` — `main_bp`: `/`, `/contato`, `/data` (hub page), `/data_science_mental` (endpoint `main.data_science_metal`, a deliberate typo used by `data/data.html`), and `/student_depression`.
 - `blueprints/auth.py` — `/registro`, `/login`, `/logout`; `login_manager.login_view = "auth.login"`.
 - `blueprints/blog.py` — `blog_bp` (`/blog`): list/detail + own-post CRUD; ownership via `_pode_gerenciar_post()` (admins can manage all).
 - `blueprints/loja.py` — `loja_bp`: `/loja`, `POST /loja/checkout/<id>` (Stripe Session `mode="payment"`, `currency="usd"`, 303 redirect), `/loja/sucesso`, `/loja/cancelado`. No webhook; orders are not persisted.
@@ -43,11 +43,13 @@ User-facing setup docs are in `README.md`; point users there instead of restatin
 - `seed.py` — `db.create_all()` + admin (`admin` / `admin123`) + sample data. Without it there is no admin user.
 - `templates/` — all pages extend `base.html`; admin forms reuse `admin/item_form.html`. Always use blueprint-prefixed endpoints in `url_for`.
 
-## Data Science route
+## Data Science routes
 
-- `forms.py::data_science_mental` has ~22 fields; their names must match the columns the pickled model expects. `main.data_science_metal` collects them into a one-row pandas DataFrame, loads `classificador.pkl` (committed at repo root) with `joblib.load`, and calls `.predict()`.
-- The prediction is currently only `print()`ed to the server console — it is not rendered or flashed to the user. Don't assume the page displays a result.
-- This route is not covered by the test suite.
+- `forms.py::data_science_mental` (~23 fields) and `DepressionForm` feed `classificador.pkl` / `student_depression01.pkl`. Field names and posted values must match the pickled model's expected columns.
+- `main.data_science_metal` and `main.student_depression` load the pickles with `joblib.load` (CWD-relative, committed at repo root), build a one-row DataFrame, then call `predict()` and `predict_proba()`.
+- Results render directly on POST (no session/redirect, so F5 re-submits) into `templates/data/data_science_mental_result.html` and `depression_result.html`: status, confidence, class distribution, curated summary + all answers, and disclaimers. `_calcular_probabilidades()` hides the probability UI if a model lacks `predict_proba`.
+- Shared result markup lives in `templates/data/_result_components.html` (Jinja macros).
+- Covered by `tests/test_data_science.py`, which monkeypatches `blueprints.main.joblib.load` with fake models (no real pickle or Stripe calls).
 
 ## Frontend / theming
 

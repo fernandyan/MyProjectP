@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+{% from "data/_result_components.html" import icone_status, barra_confianca, distribuicao, resumo_grid, detalhes_respostas %}
+
+{% block content %}
+
+{% set ns = namespace(
+    tom='sky',
+    titulo='Resultado indisponível',
+    descricao='Não foi possível identificar o resultado. Refaça o questionário para tentar novamente.',
+    dicas=[]
+) %}
+
+{% if pred == 'Yes' %}
+    {% set ns.tom = 'rose' %}
+    {% set ns.titulo = 'Sinais de depressão identificados' %}
+    {% set ns.descricao = 'O modelo identificou padrões associados a sinais de depressão. Isso não é um diagnóstico — uma avaliação profissional é o caminho mais seguro.' %}
+    {% set ns.dicas = [
+        'Fale com alguém de confiança sobre como você está se sentindo.',
+        'Procure um psicólogo ou psiquiatra para uma avaliação adequada.',
+        'Se houver risco imediato, ligue para o CVV (188) ou procure emergência.'
+    ] %}
+{% elif pred == 'No' %}
+    {% set ns.tom = 'emerald' %}
+    {% set ns.titulo = 'Sem indicativos de depressão' %}
+    {% set ns.descricao = 'O modelo não identificou padrões associados a sinais de depressão. Continue cuidando do seu bem-estar e procure apoio se algo mudar.' %}
+    {% set ns.dicas = [
+        'Mantenha rotinas de sono, alimentação e atividade física.',
+        'Continue cultivando vínculos e momentos de lazer.',
+        'Observe mudanças de humor e procure apoio se precisar.'
+    ] %}
+{% endif %}
+
+{% set apoio = namespace(
+    caixa='border-sky-200 bg-sky-50/80 dark:border-sky-800/60 dark:bg-sky-950/30',
+    titulo='text-sky-800 dark:text-sky-300',
+    texto='text-sky-700/90 dark:text-sky-200/80',
+    primario='bg-sky-500 text-slate-950 hover:bg-sky-400',
+    secundario='border-sky-300 text-sky-700 hover:border-sky-500 hover:text-sky-600 dark:border-sky-700 dark:text-sky-300 dark:hover:border-sky-400'
+) %}
+{% if ns.tom == 'rose' %}
+    {% set apoio.caixa = 'border-rose-200 bg-rose-50/80 dark:border-rose-900/60 dark:bg-rose-950/30' %}
+    {% set apoio.titulo = 'text-rose-800 dark:text-rose-300' %}
+    {% set apoio.texto = 'text-rose-700/90 dark:text-rose-200/80' %}
+    {% set apoio.primario = 'bg-rose-500 text-white hover:bg-rose-400' %}
+    {% set apoio.secundario = 'border-rose-300 text-rose-700 hover:border-rose-500 hover:text-rose-600 dark:border-rose-800 dark:text-rose-300 dark:hover:border-rose-500' %}
+{% endif %}
+
+<div class="min-h-screen theme-page py-12 px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-3xl space-y-8">
+
+        <div class="space-y-3 text-center">
+            <span
+                class="inline-block rounded-full border border-sky-200 bg-sky-50 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-sky-700 dark:border-sky-800/50 dark:bg-sky-950/60 dark:text-sky-400">
+                Resultado • Machine Learning &amp; Saúde Mental
+            </span>
+            <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl">
+                Sua análise de bem-estar
+            </h1>
+            <p class="mx-auto max-w-2xl text-base text-slate-600 dark:text-slate-400">
+                Resumo gerado a partir das respostas do questionário sobre rotina acadêmica e bem-estar.
+            </p>
+        </div>
+
+        <div
+            class="rounded-2xl border border-slate-200 bg-white/90 p-6 shadow-2xl backdrop-blur-sm dark:border-slate-800 dark:bg-slate-900/90 sm:p-10">
+            <div class="flex flex-col gap-5 sm:flex-row sm:items-start">
+                {{ icone_status(ns.tom) }}
+                <div class="space-y-2">
+                    <p class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                        Resultado do modelo
+                    </p>
+                    <h2 class="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white" role="status"
+                        aria-live="polite">
+                        {{ ns.titulo }}
+                    </h2>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">
+                        Classificação original:
+                        <code
+                            class="rounded bg-slate-100 px-1.5 py-0.5 font-mono text-xs text-slate-700 dark:bg-slate-800 dark:text-slate-200">{{ pred }}</code>
+                    </p>
+                    <p class="text-base text-slate-600 dark:text-slate-300">{{ ns.descricao }}</p>
+                </div>
+            </div>
+
+            {% if confianca is not none %}
+            <div class="mt-8">{{ barra_confianca(confianca, ns.tom) }}</div>
+            {% endif %}
+            {% if probabilidades %}
+            <div class="mt-6">{{ distribuicao(probabilidades, ns.tom) }}</div>
+            {% endif %}
+        </div>
+
+        {% if ns.dicas %}
+        <div class="rounded-2xl border border-slate-200 bg-white/90 p-6 dark:border-slate-800 dark:bg-slate-900/90 sm:p-8">
+            <h2 class="text-lg font-semibold text-slate-900 dark:text-white">O que observar</h2>
+            <ul class="mt-4 space-y-2.5">
+                {% for dica in ns.dicas %}
+                <li class="flex gap-2.5 text-sm text-slate-600 dark:text-slate-300">
+                    <span class="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-sky-500"></span>
+                    <span>{{ dica }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <div class="rounded-2xl border p-5 sm:p-6 {{ apoio.caixa }}">
+            <h2 class="text-base font-semibold {{ apoio.titulo }}">Precisa conversar?</h2>
+            <p class="mt-1 text-sm {{ apoio.texto }}">
+                O CVV oferece apoio emocional gratuito e sigiloso, 24 horas por dia. Se você estiver em risco imediato,
+                procure um serviço de emergência.
+            </p>
+            <div class="mt-4 flex flex-wrap gap-3">
+                <a href="tel:188"
+                    class="rounded-lg px-4 py-2 text-sm font-semibold shadow transition {{ apoio.primario }}">
+                    Ligar 188
+                </a>
+                <a href="https://www.cvv.org.br/" target="_blank" rel="noopener"
+                    class="rounded-lg border px-4 py-2 text-sm font-semibold transition {{ apoio.secundario }}">
+                    Acessar cvv.org.br
+                </a>
+            </div>
+        </div>
+
+        <div
+            class="space-y-4 rounded-2xl border border-slate-200 bg-white/90 p-6 dark:border-slate-800 dark:bg-slate-900/90 sm:p-8">
+            <h2 class="text-lg font-semibold text-slate-900 dark:text-white">Resumo das suas respostas</h2>
+            {{ resumo_grid(resumo) }}
+            {{ detalhes_respostas(detalhes) }}
+        </div>
+
+        <div
+            class="rounded-xl border border-slate-200 bg-slate-50 px-5 py-4 text-xs leading-relaxed text-slate-500 dark:border-slate-800 dark:bg-slate-950/50 dark:text-slate-400">
+            <strong class="font-semibold text-slate-700 dark:text-slate-300">Importante:</strong>
+            este resultado é uma estimativa de um modelo de machine learning e não constitui diagnóstico médico.
+            Apenas profissionais de saúde podem avaliar e diagnosticar depressão.
+        </div>
+
+        <div class="flex flex-col gap-3 sm:flex-row sm:justify-center">
+            <a href="{{ url_for('main.student_depression') }}"
+                class="rounded-xl bg-sky-500 px-6 py-3 text-center font-bold text-slate-950 shadow-lg shadow-sky-500/20 transition hover:bg-sky-400">
+                Refazer questionário
+            </a>
+            <a href="{{ url_for('main.data') }}"
+                class="rounded-xl border border-slate-300 px-6 py-3 text-center font-semibold text-slate-700 transition hover:border-sky-500 hover:text-sky-600 dark:border-slate-700 dark:text-slate-200 dark:hover:border-sky-400 dark:hover:text-sky-400">
+                Voltar para Data Science
+            </a>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

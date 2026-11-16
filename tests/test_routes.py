@@ -13,7 +13,7 @@ def test_blueprints_registrados(app):
 
 
 def test_rotas_publicas(client):
-    for caminho in ["/", "/contato", "/blog", "/loja"]:
+    for caminho in ["/", "/contato", "/blog", "/loja", "/data"]:
         response = client.get(caminho)
         assert response.status_code == 200, f"{caminho} -> {response.status_code}"
 

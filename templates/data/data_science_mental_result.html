@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% from "data/_result_components.html" import icone_status, barra_confianca, distribuicao, resumo_grid, detalhes_respostas %}
+
+{% block content %}
+
+{% set ns = namespace(
+    tom='sky',
+    titulo='Resultado indisponível',
+    descricao='Não foi possível identificar o resultado. Refaça a análise para tentar novamente.',
+    dicas=[]
+) %}
+
+{% if pred == 'At-risk' %}
+    {% set ns.tom = 'rose' %}
+    {% set ns.titulo = 'Risco elevado' %}
+    {% set ns.descricao = 'O modelo identificou um padrão de uso digital associado a maior impacto no bem-estar. Priorize pausas, sono de qualidade e apoio.' %}
+    {% set ns.dicas = [
+        'Reduza o tempo de tela à noite e proteja o horário de sono.',
+        'Faça pausas curtas e frequentes ao longo do dia.',
+        'Considere conversar com alguém de confiança ou buscar apoio profissional.'
+    ] %}
+{% elif pred == 'Moderate' %}
+    {% set ns.tom = 'amber' %}
+    {% set ns.titulo = 'Risco moderado' %}
+    {% set ns.descricao = 'Seus hábitos digitais mostram sinais de atenção. Pequenos ajustes na rotina podem ajudar a recuperar o equilíbrio.' %}
+    {% set ns.dicas = [
+        'Defina limites diários de uso e desative notificações desnecessárias.',
+        'Inclua momentos offline na rotina, especialmente antes de dormir.',
+        'Observe como o uso das redes afeta seu humor ao longo da semana.'
+    ] %}
+{% elif pred == 'Good' %}
+    {% set ns.tom = 'emerald' %}
+    {% set ns.titulo = 'Equilíbrio saudável' %}
+    {% set ns.descricao = 'O modelo não identificou um padrão de risco relevante. Continue cultivando hábitos digitais conscientes.' %}
+    {% set ns.dicas = [
+        'Mantenha os limites de tempo de tela que já funcionam para você.',
+        'Continue priorizando sono, atividade física e contato presencial.',
+        'Reavalie seus hábitos periodicamente para manter o equilíbrio.'
+    ] %}
+{% endif %}
+
+<div class="min-h-screen theme-page py-12 px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-3xl space-y-8">
+
+        <div class="space-y-3 text-center">
+            <span
+                class="inline-block rounded-full border border-sky-200 bg-sky-50 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-sky-700 dark:border-sky-800/50 dark:bg-sky-950/60 dark:text-sky-400">
+                Resultado • Machine Learning &amp; Saúde Mental
+            </span>
+            <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl">
+                Sua análise digital
+            </h1>
+            <p class="mx-auto max-w-2xl text-base text-slate-600 dark:text-slate-400">
+                Resumo gerado a partir das respostas do questionário de hábitos digitais.
+            </p>
+        </div>
+
+        <div
+            class="rounded-2xl border border-slate-200 bg-white/90 p-6 shadow-2xl backdrop-blur-sm dark:border-slate-800 dark:bg-slate-900/90 sm:p-10">
+            <div class="flex flex-col gap-5 sm:flex-row sm:items-start">
+                {{ icone_status(ns.tom) }}
+                <div class="space-y-2">
+                    <p class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                        Resultado do modelo
+                    </p>
+                    <h2 class="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white" role="status"
+                        aria-live="polite">
+                        {{ ns.titulo }}
+                    </h2>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">
+                        Classificação original:
+                        <code
+                            class="rounded bg-slate-100 px-1.5 py-0.5 font-mono text-xs text-slate-700 dark:bg-slate-800 dark:text-slate-200">{{ pred }}</code>
+                    </p>
+                    <p class="text-base text-slate-600 dark:text-slate-300">{{ ns.descricao }}</p>
+                </div>
+            </div>
+
+            {% if confianca is not none %}
+            <div class="mt-8">{{ barra_confianca(confianca, ns.tom) }}</div>
+            {% endif %}
+            {% if probabilidades %}
+            <div class="mt-6">{{ distribuicao(probabilidades, ns.tom) }}</div>
+            {% endif %}
+        </div>
+
+        {% if ns.dicas %}
+        <div class="rounded-2xl border border-slate-200 bg-white/90 p-6 dark:border-slate-800 dark:bg-slate-900/90 sm:p-8">
+            <h2 class="text-lg font-semibold text-slate-900 dark:text-white">O que observar</h2>
+            <ul class="mt-4 space-y-2.5">
+                {% for dica in ns.dicas %}
+                <li class="flex gap-2.5 text-sm text-slate-600 dark:text-slate-300">
+                    <span class="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-sky-500"></span>
+                    <span>{{ dica }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <div
+            class="space-y-4 rounded-2xl border border-slate-200 bg-white/90 p-6 dark:border-slate-800 dark:bg-slate-900/90 sm:p-8">
+            <h2 class="text-lg font-semibold text-slate-900 dark:text-white">Resumo das suas respostas</h2>
+            {{ resumo_grid(resumo) }}
+            {{ detalhes_respostas(detalhes) }}
+        </div>
+
+        <div
+            class="rounded-xl border border-slate-200 bg-slate-50 px-5 py-4 text-xs leading-relaxed text-slate-500 dark:border-slate-800 dark:bg-slate-950/50 dark:text-slate-400">
+            <strong class="font-semibold text-slate-700 dark:text-slate-300">Importante:</strong>
+            este resultado é uma estimativa gerada por um modelo de machine learning e não substitui uma avaliação
+            profissional de saúde.
+        </div>
+
+        <div class="flex flex-col gap-3 sm:flex-row sm:justify-center">
+            <a href="{{ url_for('main.data_science_metal') }}"
+                class="rounded-xl bg-sky-500 px-6 py-3 text-center font-bold text-slate-950 shadow-lg shadow-sky-500/20 transition hover:bg-sky-400">
+                Refazer análise
+            </a>
+            <a href="{{ url_for('main.data') }}"
+                class="rounded-xl border border-slate-300 px-6 py-3 text-center font-semibold text-slate-700 transition hover:border-sky-500 hover:text-sky-600 dark:border-slate-700 dark:text-slate-200 dark:hover:border-sky-400 dark:hover:text-sky-400">
+                Voltar para Data Science
+            </a>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
