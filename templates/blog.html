@@ -1,27 +1,173 @@
 {% extends "base.html" %}
 
 {% block content %}
-<section id="blog" class="section">
+<section id="blog" class="section blog-section">
     <div class="container">
-        <h2 class="section-title">Blog</h2>
-        {% if current_user.is_authenticated %}
-        <div class="admin-actions" style="margin-bottom: 1rem;">
-            <a href="{{ url_for('blog.blog_novo') }}" class="btn btn-sm btn-primary">+ Nova postagem</a>
+        <header class="blog-hero">
+            <div class="blog-hero-content">
+                <span class="blog-eyebrow">Blog</span>
+                <h1 class="blog-title">Ideias, código e aprendizado</h1>
+                <p class="blog-subtitle">
+                    Compartilho aprendizados, tutoriais e reflexões sobre desenvolvimento web, Python, dados e os
+                    bastidores dos meus projetos.
+                </p>
+                <div class="blog-hero-meta">
+                    <span class="badge">{{ posts|length }} {{ "publicação" if posts|length == 1 else "publicações" }}</span>
+                    <span class="badge badge-outline">Flask · Python · Dados</span>
+                </div>
+            </div>
+            {% if current_user.is_authenticated and posts %}
+            <a href="{{ url_for('blog.blog_novo') }}" class="btn btn-primary">+ Nova postagem</a>
+            {% endif %}
+        </header>
+
+        {% if posts %}
+        <div class="blog-toolbar">
+            <div class="blog-search">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
+                    stroke="currentColor" class="blog-search-icon" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="m21 21-4.35-4.35m1.35-5.4a6.75 6.75 0 1 1-13.5 0 6.75 6.75 0 0 1 13.5 0Z" />
+                </svg>
+                <label for="blog-search" class="blog-search-label">Buscar postagens</label>
+                <input type="search" id="blog-search" class="blog-search-input"
+                    placeholder="Buscar por título, autor ou conteúdo..." autocomplete="off"
+                    aria-controls="blog-grid" aria-describedby="blog-search-status">
+            </div>
+            <p id="blog-search-status" class="blog-count" role="status" aria-live="polite">
+                {{ posts|length }} {{ "publicação" if posts|length == 1 else "publicações" }}
+            </p>
         </div>
-        {% endif %}
-        <div class="grid">
+
+        <div class="blog-grid" id="blog-grid">
             {% for post in posts %}
-            <article class="card">
-                <h3 class="card-title">{{ post.titulo }}</h3>
-                <p class="card-text muted">{{ post.criado_em.strftime('%d/%m/%Y') }} · por {{ post.author.username }}</p>
-                <div class="card-links">
-                    <a href="{{ url_for('blog.post_detalhe', post_id=post.id) }}" class="btn btn-sm btn-primary">Ler mais</a>
+            {% set minutos = [1, (post.conteudo.split()|length / 200)|round(0, 'ceil')|int]|max %}
+            <article class="post-card"
+                data-search="{{ post.titulo }} {{ post.author.username }} {{ post.conteudo }}">
+                <div class="post-author">
+                    <span class="post-avatar" aria-hidden="true">{{ post.author.username[0]|upper }}</span>
+                    <div class="post-author-info">
+                        <span class="post-author-name">{{ post.author.username }}</span>
+                        <time class="post-date" datetime="{{ post.criado_em.isoformat() }}">
+                            {{ post.criado_em.strftime('%d/%m/%Y') }}
+                        </time>
+                    </div>
+                </div>
+
+                <h2 class="post-card-title">
+                    <a href="{{ url_for('blog.post_detalhe', post_id=post.id) }}">{{ post.titulo }}</a>
+                </h2>
+
+                <p class="post-excerpt">{{ post.conteudo|truncate(160, True, '…') }}</p>
+
+                <div class="post-card-footer">
+                    <span class="post-reading">{{ minutos }} min de leitura</span>
+                    <a href="{{ url_for('blog.post_detalhe', post_id=post.id) }}" class="post-read-link">
+                        Ler postagem <span aria-hidden="true">&rarr;</span>
+                    </a>
                 </div>
             </article>
-            {% else %}
-            <p class="muted">Nenhuma postagem publicada ainda.</p>
             {% endfor %}
         </div>
+
+        <div id="blog-no-results" class="blog-empty" hidden>
+            <span class="blog-empty-icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="m21 21-4.35-4.35m1.35-5.4a6.75 6.75 0 1 1-13.5 0 6.75 6.75 0 0 1 13.5 0Z" />
+                </svg>
+            </span>
+            <h2 class="blog-empty-title">Nenhum resultado encontrado</h2>
+            <p class="blog-empty-text">
+                Não encontramos publicações para <strong id="blog-search-term"></strong>.
+            </p>
+            <button type="button" id="blog-clear-search" class="btn btn-outline">Limpar busca</button>
+        </div>
+        {% else %}
+        <div class="blog-empty">
+            <span class="blog-empty-icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                </svg>
+            </span>
+            <h2 class="blog-empty-title">Nenhuma postagem por aqui ainda</h2>
+            <p class="blog-empty-text">
+                Em breve vou compartilhar novos conteúdos. Enquanto isso, explore o restante do portfólio.
+            </p>
+            {% if current_user.is_authenticated %}
+            <a href="{{ url_for('blog.blog_novo') }}" class="btn btn-primary">Criar primeira postagem</a>
+            {% else %}
+            <a href="{{ url_for('auth.login') }}" class="btn btn-outline">Entrar para publicar</a>
+            {% endif %}
+        </div>
+        {% endif %}
     </div>
 </section>
+
+{% if posts %}
+<script>
+    (function () {
+        var input = document.getElementById('blog-search');
+        var cards = Array.prototype.slice.call(document.querySelectorAll('.post-card'));
+        var noResults = document.getElementById('blog-no-results');
+        var status = document.getElementById('blog-search-status');
+        var termOutput = document.getElementById('blog-search-term');
+        var clearButton = document.getElementById('blog-clear-search');
+
+        if (!input) {
+            return;
+        }
+
+        function normalize(value) {
+            return value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+        }
+
+        function update() {
+            var term = input.value.trim();
+            var normalizedTerm = normalize(term);
+            var visible = 0;
+
+            cards.forEach(function (card) {
+                var content = normalize(card.getAttribute('data-search') || '');
+                var matches = !normalizedTerm || content.indexOf(normalizedTerm) !== -1;
+                card.hidden = !matches;
+                if (matches) {
+                    visible += 1;
+                }
+            });
+
+            if (noResults) {
+                noResults.hidden = visible !== 0;
+            }
+
+            if (termOutput) {
+                termOutput.textContent = term ? '“' + term + '”' : '';
+            }
+
+            if (status) {
+                if (normalizedTerm) {
+                    status.textContent = visible + (visible === 1 ? ' resultado encontrado' : ' resultados encontrados');
+                } else {
+                    status.textContent = cards.length + (cards.length === 1 ? ' publicação' : ' publicações');
+                }
+            }
+        }
+
+        input.addEventListener('input', update);
+
+        if (clearButton) {
+            clearButton.addEventListener('click', function () {
+                input.value = '';
+                update();
+                input.focus();
+            });
+        }
+
+        update();
+    })();
+</script>
+{% endif %}
 {% endblock %}

@@ -10,6 +10,28 @@ def _criar_post(titulo, conteudo, author):
     return post
 
 
+def test_blog_listing_exibe_resumo_e_busca(client, app):
+    with app.app_context():
+        alice = User.query.filter_by(username="alice").first()
+        _criar_post("Post pesquisável", "Conteúdo sobre Flask e Python para buscar", alice)
+    response = client.get("/blog")
+    html = response.get_data(as_text=True)
+    assert response.status_code == 200
+    assert "Post pesquisável" in html
+    assert "Conteúdo sobre Flask e Python" in html
+    assert 'id="blog-search"' in html
+    assert "min de leitura" in html
+
+
+def test_blog_listing_estado_vazio(client):
+    response = client.get("/blog")
+    html = response.get_data(as_text=True)
+    assert response.status_code == 200
+    assert "Nenhuma postagem por aqui ainda" in html
+    assert "Entrar para publicar" in html
+    assert 'id="blog-search"' not in html
+
+
 def test_usuario_cria_post(client, app):
     login(client, "alice", "alice123")
     token = csrf_para(client, "/blog/novo")
