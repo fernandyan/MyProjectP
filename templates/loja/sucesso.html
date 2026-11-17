@@ -1,12 +1,26 @@
 {% extends "base.html" %}
 
 {% block content %}
-<section class="section">
+<section class="section store-section">
     <div class="container container-narrow">
-        <h2 class="section-title">Pagamento realizado!</h2>
-        <p class="section-text">Obrigado pela sua compra. Você receberá mais informações em breve.</p>
-        <div class="card-links">
-            <a href="{{ url_for('loja.loja') }}" class="btn btn-primary">Voltar à loja</a>
+        <div class="store-result store-result-success">
+            <span class="store-result-icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+            </span>
+            <span class="store-eyebrow">Compra concluída</span>
+            <h1 class="store-result-title">Pagamento realizado!</h1>
+            <p class="store-result-text">
+                Obrigado pela sua compra. O pagamento foi processado com segurança pela Stripe. Se precisar de alguma
+                ajuda, entre em contato.
+            </p>
+            <div class="store-result-actions">
+                <a href="{{ url_for('loja.loja') }}" class="btn btn-primary">Voltar à loja</a>
+                <a href="{{ url_for('main.contato') }}" class="btn btn-outline">Falar comigo</a>
+            </div>
         </div>
     </div>
 </section>

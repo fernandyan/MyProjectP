@@ -1,28 +1,140 @@
 {% extends "base.html" %}
 
 {% block content %}
-<section class="section dark:bg-slate-700 bg-gradient-to-r from-indigo-100">
-    <div class="container shadow-2xl p-7 rounded-lg bg-sky-50 dark:bg-slate-900">
-        <h2 class="section-title ">Loja</h2>
-        <p class="section-text m-7 text-slate-500 dark:text-slate-300">Pague com segurança via Stripe Checkout.</p>
-
-        <div class="grid">
-            {% for produto in produtos %}
-            <article class="card">
-                <h3 class="card-title">{{ produto.nome }}</h3>
-                <p class="card-text muted">{{ produto.descricao }}</p>
-                <p class="card-price">US$ {{ "%.2f"|format(produto.preco_usd) }}</p>
-                <div class="card-links">
-                    <form method="post" action="{{ url_for('loja.checkout', produto_id=produto.id) }}">
-                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                        <button type="submit" class="btn btn-sm btn-primary">Comprar</button>
-                    </form>
+<section class="section store-section" aria-labelledby="loja-title">
+    <div class="container">
+        <header class="store-hero">
+            <div class="store-hero-content">
+                <span class="store-eyebrow">Loja</span>
+                <h1 id="loja-title" class="store-title">Produtos para acelerar seu aprendizado</h1>
+                <p class="store-subtitle">
+                    Materiais e sessões para aprofundar seus conhecimentos em desenvolvimento web, Python e dados.
+                    Finalize sua compra com segurança pelo Stripe Checkout.
+                </p>
+                <div class="store-meta">
+                    <span class="badge">
+                        {{ produtos|length }} {{ "produto disponível" if produtos|length == 1 else "produtos disponíveis" }}
+                    </span>
+                    <span class="badge badge-outline">Pagamento via Stripe</span>
                 </div>
-            </article>
-            {% else %}
-            <p class="muted">Nenhum produto disponível no momento.</p>
-            {% endfor %}
-        </div>
+            </div>
+
+            <aside class="store-trust" aria-label="Informações sobre pagamento">
+                <div class="store-trust-item">
+                    <span class="store-trust-icon" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+                        </svg>
+                    </span>
+                    <div>
+                        <strong>Checkout seguro</strong>
+                        <span>Processado pela Stripe</span>
+                    </div>
+                </div>
+                <div class="store-trust-item">
+                    <span class="store-trust-icon" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                    </span>
+                    <div>
+                        <strong>Preços em USD</strong>
+                        <span>Valores exibidos em dólares</span>
+                    </div>
+                </div>
+            </aside>
+        </header>
+
+        <section class="store-products" aria-labelledby="produtos-title">
+            <div class="store-products-header">
+                <div>
+                    <span class="store-eyebrow">Catálogo</span>
+                    <h2 id="produtos-title" class="store-products-title">Produtos disponíveis</h2>
+                </div>
+                <p class="store-products-count">
+                    {{ produtos|length }} {{ "item" if produtos|length == 1 else "itens" }} no catálogo
+                </p>
+            </div>
+
+            <div class="store-grid">
+                {% for produto in produtos %}
+                <article class="product-card">
+                    <div class="product-card-top">
+                        <span class="product-icon" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="m21 7.5-9-5.25L3 7.5m18 0-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
+                            </svg>
+                        </span>
+                        <span class="badge badge-outline">Disponível</span>
+                    </div>
+
+                    <h3 class="product-name">{{ produto.nome }}</h3>
+                    <p class="product-description">{{ produto.descricao }}</p>
+
+                    <div class="product-card-footer">
+                        <p class="product-price">
+                            <span class="product-price-label">Preço</span>
+                            <strong>US$ {{ "%.2f"|format(produto.preco_usd) }}</strong>
+                        </p>
+
+                        <form class="product-form" method="post"
+                            action="{{ url_for('loja.checkout', produto_id=produto.id) }}">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <button type="submit" class="btn btn-primary product-buy">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.8" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+                                </svg>
+                                Comprar agora
+                            </button>
+                        </form>
+                    </div>
+                </article>
+                {% else %}
+                <div class="store-empty">
+                    <span class="store-empty-icon" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12a2.25 2.25 0 0 1-2.243 2.493H5.374a2.25 2.25 0 0 1-2.243-2.493l1.263-12A2.25 2.25 0 0 1 6.633 7.5h10.734a2.25 2.25 0 0 1 2.24 2.007Z" />
+                        </svg>
+                    </span>
+                    <h2 class="store-empty-title">Nenhum produto disponível no momento</h2>
+                    <p class="store-empty-text">
+                        A loja está sendo preparada com novos materiais. Enquanto isso, fique à vontade para entrar em
+                        contato.
+                    </p>
+                    <div class="store-empty-actions">
+                        {% if current_user.is_authenticated and current_user.is_admin %}
+                        <a href="{{ url_for('admin.produto_novo') }}" class="btn btn-primary">Cadastrar produto</a>
+                        {% endif %}
+                        <a href="{{ url_for('main.contato') }}" class="btn btn-outline">Falar comigo</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            {% if produtos %}
+            <div class="store-note">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
+                    stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+                </svg>
+                <span>
+                    Pagamentos processados com segurança pela Stripe. Ao comprar, você será redirecionado para concluir
+                    a transação.
+                </span>
+            </div>
+            {% endif %}
+        </section>
     </div>
 </section>
 {% endblock %}

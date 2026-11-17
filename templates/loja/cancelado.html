@@ -1,12 +1,25 @@
 {% extends "base.html" %}
 
 {% block content %}
-<section class="section">
+<section class="section store-section">
     <div class="container container-narrow">
-        <h2 class="section-title">Pagamento cancelado</h2>
-        <p class="section-text">Nenhum valor foi cobrado. Você pode tentar novamente quando quiser.</p>
-        <div class="card-links">
-            <a href="{{ url_for('loja.loja') }}" class="btn btn-primary">Voltar à loja</a>
+        <div class="store-result store-result-cancel">
+            <span class="store-result-icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+            </span>
+            <span class="store-eyebrow">Checkout interrompido</span>
+            <h1 class="store-result-title">Pagamento cancelado</h1>
+            <p class="store-result-text">
+                Nenhum valor foi cobrado. Você pode voltar à loja e tentar novamente quando quiser.
+            </p>
+            <div class="store-result-actions">
+                <a href="{{ url_for('loja.loja') }}" class="btn btn-primary">Voltar à loja</a>
+                <a href="{{ url_for('main.contato') }}" class="btn btn-outline">Falar comigo</a>
+            </div>
         </div>
     </div>
 </section>

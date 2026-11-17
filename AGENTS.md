@@ -25,7 +25,7 @@ Copy-Item .env.example .env   # then set STRIPE keys
 .\venv\Scripts\python -m pytest "tests/test_blog_flow.py::test_usuario_exclui_proprio_post" -v
 ```
 
-No lint, formatter, typecheck, or CI is configured. Current suite: 31 tests.
+No lint, formatter, typecheck, or CI is configured. Current suite: 33 tests.
 
 User-facing setup docs are in `README.md`; point users there instead of restating setup.
 

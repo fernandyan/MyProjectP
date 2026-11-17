@@ -26,12 +26,35 @@ def test_loja_lista_apenas_produtos_disponiveis(client):
     assert "Produto Ativo" in html
     assert "Produto Oculto" not in html
     assert "US$ 29.90" in html
+    assert "1 produto disponível" in html
+    assert "Produtos disponíveis" in html
+    assert "Comprar agora" in html
+    assert "Checkout seguro" in html
 
 
 def test_loja_vazia_sem_produtos(client):
     response = client.get("/loja")
     assert response.status_code == 200
-    assert "Nenhum produto disponível" in response.get_data(as_text=True)
+    html = response.get_data(as_text=True)
+    assert "Nenhum produto disponível no momento" in html
+    assert "Falar comigo" in html
+
+
+def test_loja_sucesso_exibe_confirmacao(client):
+    response = client.get("/loja/sucesso")
+    assert response.status_code == 200
+    html = response.get_data(as_text=True)
+    assert "Pagamento realizado!" in html
+    assert "Voltar à loja" in html
+
+
+def test_loja_cancelado_permite_nova_tentativa(client):
+    response = client.get("/loja/cancelado")
+    assert response.status_code == 200
+    html = response.get_data(as_text=True)
+    assert "Pagamento cancelado" in html
+    assert "Nenhum valor foi cobrado" in html
+    assert "Voltar à loja" in html
 
 
 def test_checkout_redireciona_para_stripe(client, monkeypatch):
